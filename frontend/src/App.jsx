@@ -1,33 +1,37 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { Route, Routes } from 'react-router-dom'
+import { Navbar } from './components/Navbar'
+import { Register } from './components/pages/Register'
+import { Home } from './components/pages/Home'
+import { Client } from './components/pages/Client'
+import { Admin } from './components/pages/Admin'
+import { Login1 } from './components/pages/Logins/Login1'
+import { Registration1 } from './components/pages/Registrations/Registration1'
+
 import './App.css'
+import { Footer } from './components/Footer'
+import { LoginSection } from './components/pages/LoginSection'
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <div className='main'>
+        <Navbar />
+        <div className="">
+          <Routes>
+            <Route path='/' element={<Home />} />
+            <Route path='/client' element={<Client />} />
+            <Route path='/admin' element={<Admin />} />
+            <Route path="/logins" element={<LoginSection />} />
+            <Route path='/registers' element={<Register />} />
+            <Route path='/login1' element={<Login1 />} />
+            <Route path='/register1' element={<Registration1 />} />
+          </Routes>
+        </div>
+        <Footer></Footer>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
   )
 }
