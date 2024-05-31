@@ -1,5 +1,7 @@
 package com.authapp.backend.repository;
 
+import com.authapp.backend.model.AuthRequest;
+import com.authapp.backend.model.AuthResponse;
 import com.authapp.backend.model.User;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.ListCrudRepository;
@@ -10,4 +12,6 @@ public interface UserRepository extends ListCrudRepository<User, Integer> {
     boolean existsByName(@Param("name") String name);
     @Query("SELECT COUNT(u) > 0 FROM User u WHERE u.id = :userId")
     boolean existsById(@Param("userId") Integer userId);
+    @Query("SELECT u FROM User u WHERE u.name = :name")
+    User foundUser(@Param("name") String name);
 }
