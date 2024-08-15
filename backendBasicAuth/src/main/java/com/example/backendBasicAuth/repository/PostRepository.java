@@ -1,7 +1,7 @@
-package com.authapp.backend.repository;
+package com.example.backendBasicAuth.repository;
 
-import com.authapp.backend.model.Post;
-import com.authapp.backend.model.PostView;
+
+import com.example.backendBasicAuth.model.Post;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.ListCrudRepository;
 import org.springframework.data.repository.query.Param;

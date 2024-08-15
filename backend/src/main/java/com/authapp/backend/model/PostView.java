@@ -1,28 +1,20 @@
 package com.authapp.backend.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.net.InterfaceAddress;
 
-@Entity
-@Table(name = "posts")
-public class Post {
-    @Id
-    @GeneratedValue
+
+public class PostView {
     private Integer id;
     private String title;
     private String content;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    @JsonIgnoreProperties({"password", "role"})
-    private User user;
-
-    @Transient
-//    @JsonIgnore
     private Integer userId;
+    private String userName;
+
+    public PostView(){}
 
     public Integer getUserId() {
         return userId;
@@ -32,22 +24,12 @@ public class Post {
         this.userId = userId;
     }
 
-    public Post(){
-
+    public String getUserName() {
+        return userName;
     }
 
-    public Post(String title, String content, Integer userId) {
-        this.title = title;
-        this.content = content;
-        this.userId = userId;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public Integer getId() {
@@ -73,5 +55,4 @@ public class Post {
     public void setContent(String content) {
         this.content = content;
     }
-
 }

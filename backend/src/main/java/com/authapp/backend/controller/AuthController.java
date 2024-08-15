@@ -43,14 +43,15 @@ public class AuthController {
 
 
     @PostMapping("/register")
-    public ResponseEntity<String> registration(@Valid @RequestBody User user, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
+    public ResponseEntity<String> registration(@Valid @RequestBody AuthRequest authRequest, BindingResult bindingResult) {
+        if (bindingResult.hasErrors() || authRequest.getLogin() == null || authRequest.getPwd() == null) {
             // Jeśli walidacja danych wejściowych nie powiodła się, zwróć błąd 400 (Bad Request) i listę błędów
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid user data: " + bindingResult.getAllErrors());
         } else {
-            if (userRepository.existsByName(user.getName())) {
+            if (userRepository.existsByName(authRequest.getLogin())) {
                 return ResponseEntity.status(HttpStatus.CONFLICT).body("User with this name already exists");
             } else {
+                User user = new User(authRequest.getLogin(), authRequest.getPwd(), User.Role.USER);
                 userRepository.save(user);
                 return ResponseEntity.ok("User registered successfully");
             }

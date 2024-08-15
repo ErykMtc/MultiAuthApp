@@ -1,9 +1,11 @@
 package com.authapp.backend.controller;
 
 import com.authapp.backend.model.Post;
+import com.authapp.backend.model.PostView;
 import com.authapp.backend.model.User;
 import com.authapp.backend.repository.PostRepository;
 import com.authapp.backend.repository.UserRepository;
+import com.authapp.backend.utils.PostMapper;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @CrossOrigin
 @RestController
@@ -30,8 +33,9 @@ public class PostController {
     }
 
     @GetMapping("/")
-    public List<Post> getAllPosts(){
-        return postRepository.findAllWithUser();
+    public List<PostView> getAllPosts(){
+        List<Post> posts = postRepository.findAllWithUser();
+        return posts.stream().map(PostMapper::toPostView).collect(Collectors.toList());
     }
 
     @PostMapping("/add")
