@@ -65,4 +65,13 @@ public class PostController {
             return ResponseEntity.ok("Post added successfully");
         }
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deletePost(@PathVariable Integer id){
+        if(!postRepository.existsById(id)){
+            return ResponseEntity.badRequest().body("Post does not exist");
+        }
+        postRepository.deletePost(id);
+        return ResponseEntity.ok("Post deleted successfully");
+    }
 }

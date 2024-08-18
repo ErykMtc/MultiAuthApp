@@ -37,4 +37,15 @@ public class PostController {
 
         return ResponseEntity.ok(result);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deletePost(@PathVariable Integer id){
+        String result = postService.deletePost(id);
+
+        if (result.startsWith("Post")){
+            return ResponseEntity.badRequest().body(result);
+        }
+
+        return ResponseEntity.ok(result);
+    }
 }

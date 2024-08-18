@@ -66,19 +66,23 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf(csrf -> csrf.ignoringRequestMatchers("/posts/**", "/auth/**"))
+        http.csrf(csrf -> csrf.ignoringRequestMatchers("/posts/**", "/auth/**", "/users/**"))
                 .authorizeHttpRequests((authorize) -> authorize
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/posts/**").hasRole("USER")
+                        .requestMatchers(HttpMethod.DELETE, "/users/**").hasRole("USER")
+                        .requestMatchers(HttpMethod.PUT, "/users/**").hasRole("USER")
                         .requestMatchers("/users/**").hasRole("USER")
                         .anyRequest().authenticated())
                 .userDetailsService(customUserDetailsService)
-                .sessionManagement(Customizer.withDefaults());
-        http.formLogin(Customizer.withDefaults());
-        http.httpBasic(Customizer.withDefaults());
-        http.exceptionHandling(ex -> ex.accessDeniedPage("/UnAuthorized"));
+                .sessionManagement(Customizer.withDefaults())
+                .formLogin(Customizer.withDefaults())
+                .httpBasic(Customizer.withDefaults())
+                .exceptionHandling(ex -> ex.accessDeniedPage("/UnAuthorized"));
+
         return http.build();
     }
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return NoOpPasswordEncoder.getInstance();

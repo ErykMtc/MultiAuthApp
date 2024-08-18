@@ -58,4 +58,12 @@ public class PostService {
             return "Post added successfully";
         }
     }
+
+    public String deletePost(Integer id){
+        if(!postRepository.existsById(id)){
+            return "Post does not exist";
+        }
+        postRepository.deletePost(id);
+        return "Deleted successfully";
+    }
 }
