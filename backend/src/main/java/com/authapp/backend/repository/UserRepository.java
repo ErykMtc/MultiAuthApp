@@ -16,8 +16,8 @@ public interface UserRepository extends ListCrudRepository<User, Integer> {
     User foundUser(@Param("name") String name);
     @Modifying
     @Transactional
-    @Query("DELETE FROM User u WHERE u.name = :name")
-    void deleteByName(@Param("name") String name);
+    @Query("DELETE FROM User u WHERE u.id = :id")
+    void deleteByID(@Param("id") Integer id);
     @Modifying
     @Transactional
     @Query("UPDATE User u SET u.password = :password WHERE u.id = :userId")

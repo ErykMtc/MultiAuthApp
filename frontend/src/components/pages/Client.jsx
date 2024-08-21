@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import './Client.css'
+import { RxAvatar } from "react-icons/rx";
 
 export const Client = () => {
     const [postList, setPostList] = useState(null);
@@ -72,10 +73,18 @@ export const Client = () => {
                 <h1>Wprowadzone dane</h1>
                 {
                     Array.isArray(postList) ? postList.map((item, iteration) => (
-                        <div key={iteration} className='content-section'>
-                            <span>{item.userName}</span>
-                            <span>{item.title}</span>
-                            <p>{item.content}</p>
+                        <div key={iteration} className="content-section">
+                            <div className="post-header">
+                                <div className='post-user'>
+                                    <RxAvatar className="avatar-icon" />
+                                    <span className="user-name">{item.userName}</span>
+                                </div>
+                                <div className='post-title-box'>
+                                    <span className="post-title">{item.title}</span>
+                                </div>
+                            </div>
+                            
+                            <p className="post-content">{item.content}</p>
                         </div>
                     )) : <p>No posts available</p>
                 }

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './Login.css';
+import Cookies from 'js-cookie';
 
 export const Login1 = () => {
 
@@ -22,16 +23,17 @@ export const Login1 = () => {
         };
 
         fetch("http://localhost:8080/auth/", requestOptions)
-            .then((response) => response.text())
-            .then((result) => {
-                console.log(result); 
-                if(result === "Invalid credentials"){
-                    setLoginProblem(result);
-                } else{
-                    setLoginProblem("");
-                }
-            })
-            .catch((error) => console.error(error));
+    .then((response) => response.json()) // Parse the response as JSON
+    .then((result) => {
+        // Now result is an object and you can access its properties
+        if(result === "Invalid credentials"){
+            setLoginProblem(result);
+        } else {
+            console.log(result.role); // Access the role property
+            Cookies.set('AuthApp', JSON.stringify({login: result.login, pwd: result.pwd, role: result.role}));
+        }
+    })
+    .catch((error) => console.error(error));
     }
 
     console.log(password, username);

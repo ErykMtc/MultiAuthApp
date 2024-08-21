@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-@CrossOrigin
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -27,10 +27,10 @@ public class UserController {
         return userRepository.findAll();
     }
 
-    @DeleteMapping("")
-    public ResponseEntity<String> deleteUser(@RequestParam String name) {
-        if (userRepository.existsByName(name)) {
-            userRepository.deleteByName(name);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteUser(@PathVariable Integer id) {
+        if (userRepository.existsById(id)) {
+            userRepository.deleteByID(id);
             return ResponseEntity.ok("User deleted successfully");
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
