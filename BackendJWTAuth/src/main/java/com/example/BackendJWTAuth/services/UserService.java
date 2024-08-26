@@ -1,13 +1,16 @@
-package com.example.backendBasicAuth.services;
+package com.example.BackendJWTAuth.services;
 
-import com.example.backendBasicAuth.model.AuthResponse;
-import com.example.backendBasicAuth.model.User;
-import com.example.backendBasicAuth.repository.UserRepository;
+import com.example.BackendJWTAuth.model.AuthRequest;
+import com.example.BackendJWTAuth.model.AuthResponse;
+import com.example.BackendJWTAuth.model.User;
+import com.example.BackendJWTAuth.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,11 +21,15 @@ import java.util.Optional;
 
 @Service
 public class UserService {
+
     @Autowired
     private UserRepository userRepository;
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    private JWTService jwtService;
+
+    @Autowired
+    AuthenticationManager authManager;
 
     public User registerNewUser(String username, String password, User.Role role) {
         if (userRepository.existsByName(username)) {
@@ -49,6 +56,15 @@ public class UserService {
         }
 
         throw new IllegalArgumentException("Unsuccessfully login");
+    }
+
+    public String verify(AuthRequest user) {
+        Authentication authentication = authManager.authenticate(new UsernamePasswordAuthenticationToken(user.getLogin(), user.getPwd()));
+        if (authentication.isAuthenticated()) {
+            return jwtService.generateToken(user.getLogin());
+        } else {
+            return "fail";
+        }
     }
 
     public List<User> getAllUsers(){

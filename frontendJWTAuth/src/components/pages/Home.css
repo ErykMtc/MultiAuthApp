@@ -1,0 +1,83 @@
+.first-section{
+    background-image: url('../../assets/home2.jpg');
+    background-size: cover;
+    height: 600px;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.first-section div{
+    width: 500px;
+    height: 300px;
+    background-color: rgba(0, 0, 0, 0.734);
+    position: absolute;
+    top: calc(50% - 150px);
+    left: 10%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding-left: 100px;
+}
+
+.first-section div>a{
+    color: white;
+    font-size: 3rem;
+}
+
+.first-section div>p{
+    color: white;
+    font-size: 3rem;
+}
+
+.first-section div>p{
+    margin: 0;
+    margin-bottom: 3rem;
+}
+
+.second-section{
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    background-color: #f4f5f7;
+}
+
+.center-col{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.second-section-box{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 250px;
+}
+
+.second-section-shape{
+    text-align: center;
+    width: 150px;
+    font-size: 5rem;
+    color: #5C6BC0;
+    margin-bottom: 1rem;
+    border-bottom: 8px dotted #FFB74D;
+}
+
+.second-section-content{
+    font-size: 1.125rem;
+    text-align: center;
+}
+
+.third-section{
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.third-section h1{
+    text-align: center;
+}
+
+.third-section-content{
+    text-align: center;
+}

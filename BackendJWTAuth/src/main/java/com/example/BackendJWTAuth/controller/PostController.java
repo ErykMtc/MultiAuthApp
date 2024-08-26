@@ -1,8 +1,8 @@
-package com.example.backendBasicAuth.controller;
+package com.example.BackendJWTAuth.controller;
 
-import com.example.backendBasicAuth.model.Post;
-import com.example.backendBasicAuth.model.PostView;
-import com.example.backendBasicAuth.services.PostService;
+import com.example.BackendJWTAuth.model.Post;
+import com.example.BackendJWTAuth.model.PostView;
+import com.example.BackendJWTAuth.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

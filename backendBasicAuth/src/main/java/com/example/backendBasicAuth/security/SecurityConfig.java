@@ -29,41 +29,6 @@ public class SecurityConfig {
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
 
-//    @Bean
-//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//        http
-//                .csrf(csrf -> csrf.ignoringRequestMatchers("/auth/**"))
-//                .authorizeHttpRequests((authorize) -> authorize
-//                        .requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
-//                        .requestMatchers("/user/**").hasRole("USER")
-//                        .requestMatchers("/admin/**").hasRole("ADMIN")
-//                        .anyRequest().authenticated()
-//                )
-//                .formLogin(Customizer.withDefaults())
-//                .httpBasic(Customizer.withDefaults())
-//                .exceptionHandling((ex) -> ex.accessDeniedPage("/UnAuthorized"));
-//
-//
-//        return http.build();
-//    }
-//
-//    @Bean
-//    public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
-//        AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
-//        authenticationManagerBuilder.userDetailsService(customUserDetailsService).passwordEncoder(passwordEncoder());
-//        return authenticationManagerBuilder.build();
-//    }
-//
-//    @Bean
-//    public PasswordEncoder passwordEncoder() {
-//        return NoOpPasswordEncoder.getInstance(); // Używa NoOp do niekodowania haseł
-//    }
-//
-//    @Bean
-//    public UserDetailsService userDetailsService() {
-//        return customUserDetailsService; // Własny UserDetailsService do ładowania danych użytkownika
-//    }
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.ignoringRequestMatchers("/posts/**", "/auth/**", "/users/**"))

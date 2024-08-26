@@ -1,0 +1,97 @@
+.auth-frame{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.auth-box{
+    /* border: 1px solid black; */
+    border-radius: 10px;
+    width: 350px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    -webkit-box-shadow: 0px 0px 40px -6px rgba(19, 29, 120, 1);
+    -moz-box-shadow: 0px 0px 40px -6px rgba(19, 29, 120, 1);
+    box-shadow: 0px 0px 40px -6px rgba(19, 29, 120, 1);
+    /* background-image: linear-gradient(to right top, #ea1616, #fa003f, #ff0065, #ff008b, #fa00b2, #eb00c3, #d714d5, #bd28e7, #a322e8, #8520e9, #5f20ea, #1623ea); */
+}
+
+.auth-icon{
+    /* font-size: 4rem; */
+    /* width: 120px;
+    height: 120px;
+    font-weight: bolder; */
+    /* border-radius: 50%; */
+    /* background-color: bisque;
+    display: flex;
+    align-items: center;
+    justify-content: center; */
+    background-image: url("../../assets/img2.jpg");
+    background-size: cover;
+    height: 180px;
+    width: 100%;
+    position: relative;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.auth-footer{
+    width: 100%;
+}
+
+.auth-footer a{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    border-radius: 0;
+    border: none;
+    background-image: linear-gradient(to right, #1755b1, #134a9b, #0f3f86, #0c3472, #082a5e);
+    color: white;
+    height: 3.5rem;
+    font-size: 1.25rem;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    cursor: pointer;
+}
+
+.auth-footer button{
+    width: 100%;
+    border-radius: 0;
+    border: none;
+    background-image: linear-gradient(to right, #1755b1, #134a9b, #0f3f86, #0c3472, #082a5e);
+    color: white;
+    height: 3.5rem;
+    font-size: 1.25rem;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    cursor: pointer;
+}
+
+.auth-content {
+    width: 290px;
+}
+
+.auth-content ul{
+    padding-left: 1rem;
+}
+
+.auth-content ul>li{
+    padding-left: 0.75rem;
+    padding-bottom: 0.75rem;
+}
+
+.auth-content ul>li:last-child{
+    padding-bottom: 0;
+}
+
+.auth-content ul>li::marker{
+    content: "🔐";
+}
+
+.row-margin{
+    margin-top: 4rem;
+}
