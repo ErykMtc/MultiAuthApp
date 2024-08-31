@@ -2,6 +2,7 @@ package com.example.BackendJWTAuth.services;
 
 import com.example.BackendJWTAuth.model.AuthRequest;
 import com.example.BackendJWTAuth.model.AuthResponse;
+import com.example.BackendJWTAuth.model.JwtUser;
 import com.example.BackendJWTAuth.model.User;
 import com.example.BackendJWTAuth.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -41,7 +43,7 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public AuthResponse userLogin(String username, String password, User.Role role) {
+    public AuthResponse userLogin(String username, String password) {
         if (userRepository.existsByName(username)) {
             User user = userRepository.foundUser(username)
                     .orElseThrow(() -> new UsernameNotFoundException("User not found"));
@@ -58,13 +60,23 @@ public class UserService {
         throw new IllegalArgumentException("Unsuccessfully login");
     }
 
-    public String verify(AuthRequest user) {
-        Authentication authentication = authManager.authenticate(new UsernamePasswordAuthenticationToken(user.getLogin(), user.getPwd()));
-        if (authentication.isAuthenticated()) {
-            return jwtService.generateToken(user.getLogin());
-        } else {
-            return "fail";
+    public JwtUser verify(AuthRequest authRequest) {
+        if (userRepository.existsByName(authRequest.getLogin())) {
+            User user = userRepository.foundUser(authRequest.getLogin())
+                    .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+
+            Authentication authentication = authManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getLogin(), authRequest.getPwd()));
+            if (authentication.isAuthenticated()) {
+                UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+
+                JwtUser jwtUser = new JwtUser();
+                jwtUser.setToken(jwtService.generateToken(userDetails));
+                jwtUser.copyFrom(user);
+
+                return jwtUser;
+            }
         }
+        throw new IllegalArgumentException("Unsuccessfully login");
     }
 
     public List<User> getAllUsers(){

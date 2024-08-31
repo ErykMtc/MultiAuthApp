@@ -1,0 +1,35 @@
+spring:
+  application:
+    name: BackendOAuth
+  jpa:
+    hibernate:
+      ddl-auto: update
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            clientId: Ov23liKOa2SElpNy1mjT
+            clientSecret: 1d550a371afe9dba7d015aefdd126a12a93174ce
+            scope: read:user, user:email
+          google:
+            clientId: 723462188364-ebmtjmcgfh6nd0fe77bp1jhdnmas7fnf.apps.googleusercontent.com
+            clientSecret: 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
+            scope: profile, email
+
+app:
+  jwt:
+    # Signing key for HS512 algorithm
+    # In http://www.allkeysgenerator.com/ you can generate all kinds of keys
+    secret: v9y$B&E)H@MbQeThWmZq4t7w!z%C*F-JaNdRfUjXn2r5u8x/A?D(G+KbPeShVkYp
+    expiration:
+      minutes: 10
+  oauth2:
+    redirectUri: http://localhost:3000/oauth2/redirect
+  cors:
+    allowed-origins: http://localhost:3000
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+    # org.hibernate.SQL: DEBUG

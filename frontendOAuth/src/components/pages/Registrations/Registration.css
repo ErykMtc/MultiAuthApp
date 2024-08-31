@@ -1,0 +1,35 @@
+.reg-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 4rem 0;
+}
+
+.reg-box{
+    display: flex;
+    flex-direction: column;
+    padding: 3.5rem;
+    border: 1px solid gray;
+}
+
+.reg-box h1{
+    font-size: 40px;
+    margin: 0;
+    margin-bottom: 2rem;
+}
+
+.reg-box label{
+    font-size: 20px;
+}
+
+.reg-box input{
+    margin: 0.5rem 0 1rem 0;
+    font-size: 20px;
+    padding: 0.5rem 0.875rem;
+}
+
+.reg-box button{
+    font-size: 22px;
+    padding: 1rem 0;
+}

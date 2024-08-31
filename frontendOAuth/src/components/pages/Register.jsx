@@ -1,0 +1,126 @@
+import { Link, useMatch, useResolvedPath } from "react-router-dom";
+
+export const Register = () =>{
+    return(
+        <div className="container container-margin">
+            <div className="row">
+                <div className="col">
+                    <div className="auth-frame">
+                        <div className="auth-box">
+                            <div className="auth-icon"></div>
+                            <div className="auth-content">
+                                <ul>
+                                    <li>Uwierzytelnianie: hasłem</li>
+                                    <li>Protokół: HTTP,</li>
+                                    <li>Sesja: w cookies niezabezpieczona,</li>
+                                    <li>Hasła w bazie: nieszyfrowane</li>
+                                </ul>
+                            </div>
+                            <div className="auth-footer">
+                                <Link to="/register1">Zarejestruj się</Link>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="col">
+                    <div className="auth-frame">
+                        <div className="auth-box">
+                            <div className="auth-icon"></div>
+                            <div className="auth-content">
+                                <ul>
+                                    <li>Uwierzytelnianie: hasłem,</li>
+                                    <li>Protokół: HTTPS,</li>
+                                    <li>Sesja: w cookies zabezpieczona,</li>
+                                    <li>Hasła w bazie: szyfrowane</li>
+                                </ul>
+                            </div>
+                            <div className="auth-footer">
+                                <button>Zarejestruj się</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="col">
+                <div className="auth-frame">
+                        <div className="auth-box">
+                            <div className="auth-icon"></div>
+                            <div className="auth-content">
+                                <ul>
+                                    <li>Uwierzytelnianie: hasłem,</li>
+                                    <li>Protokół: HTTPS,</li>
+                                    <li>Sesja: JWT,</li>
+                                    <li>Hasła w bazie: haszowane</li>
+                                </ul>
+                            </div>
+                            <div className="auth-footer">
+                                <button>Zarejestruj się</button>
+                            </div>
+                        </div>
+                    </div> 
+                </div>
+            </div>
+
+            <div className="row-margin">
+
+
+            <div className="row">
+                <div className="col">
+                <div className="auth-frame">
+                        <div className="auth-box">
+                            <div className="auth-icon"></div>
+                            <div className="auth-content">
+                                <ul>
+                                    <li>Uwierzytelnianie: hasło jednorazow</li>
+                                    <li>Protokół: HTTP,</li>
+                                    <li>Sesja: w cookies niezabezpieczona,</li>
+                                    <li>Hasła w bazie: szyfrowane</li>
+                                </ul>
+                            </div>
+                            <div className="auth-footer">
+                                <button>Zarejestruj się</button>
+                            </div>
+                        </div>
+                    </div> 
+                </div>
+                
+                <div className="col">
+                <div className="auth-frame">
+                        <div className="auth-box">
+                            <div className="auth-icon"></div>
+                            <div className="auth-content">
+                                <ul>
+                                    <li>Uwierzytelnianie: dwupoziomowe</li>
+                                    <li>Protokół: HTTPS,</li>
+                                    <li>Sesja: Local Storage</li>
+                                    <li>Hasła w bazie: haszowane</li>
+                                </ul>
+                            </div>
+                            <div className="auth-footer">
+                                <button>Zarejestruj się</button>
+                            </div>
+                        </div>
+                    </div> 
+                </div>
+                <div className="col">
+                <div className="auth-frame">
+                        <div className="auth-box">
+                            <div className="auth-icon"></div>
+                            <div className="auth-content">
+                                <ul>
+                                    <li>Uwierzytelnianie: dwupoziomowe</li>
+                                    <li>Protokół: HTTPS,</li>
+                                    <li>Sesja: Local Storage zabezpieczone</li>
+                                    <li>Hasła w bazie: haszowane</li>
+                                </ul>
+                            </div>
+                            <div className="auth-footer">
+                                <button>Zarejestruj się</button>
+                            </div>
+                        </div>
+                    </div> 
+                </div>
+            </div>
+            </div>
+        </div>
+    )
+}

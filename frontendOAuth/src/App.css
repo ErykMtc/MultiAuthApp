@@ -1,0 +1,9 @@
+.container-margin{
+  margin-top: 4rem;
+  margin-bottom: 2rem;
+}
+
+.main{
+  min-height: calc(100vh - 130px);
+  position: relative;
+}
