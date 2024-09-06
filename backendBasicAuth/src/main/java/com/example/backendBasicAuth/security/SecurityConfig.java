@@ -35,9 +35,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests((authorize) -> authorize
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/posts/**").hasRole("USER")
-                        .requestMatchers(HttpMethod.DELETE, "/users/**").hasRole("USER")
+                        .requestMatchers(HttpMethod.DELETE, "/users/**").hasAnyRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/users/**").hasRole("USER")
-                        .requestMatchers("/users/**").hasRole("USER")
+                        .requestMatchers("/users/**").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .userDetailsService(customUserDetailsService)
                 .sessionManagement(Customizer.withDefaults())

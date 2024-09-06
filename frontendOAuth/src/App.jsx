@@ -7,6 +7,7 @@ import { Client } from './components/pages/Client'
 import { Admin } from './components/pages/Admin'
 import { Login1 } from './components/pages/Logins/Login1'
 import { Registration1 } from './components/pages/Registrations/Registration1'
+import OAuth2Redirect from './components/pages/OAuthUtils/OAuth2Redirect'
 import { Navigate } from 'react-router-dom';
 
 import './App.css';
@@ -38,6 +39,7 @@ function App() {
             <Route path='/registers' element={<Register />} />
             <Route path='/login1' element={<Login1 />} />
             <Route path='/register1' element={<Registration1 />} />
+            <Route path='/oauth2/redirect' element={<OAuth2Redirect />} />
           </Routes>
         </div>
         <Footer />

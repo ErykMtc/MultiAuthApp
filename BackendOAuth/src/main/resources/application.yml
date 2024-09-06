@@ -25,9 +25,9 @@ app:
     expiration:
       minutes: 10
   oauth2:
-    redirectUri: http://localhost:3000/oauth2/redirect
+    redirectUri: http://localhost:5173/oauth2/redirect
   cors:
-    allowed-origins: http://localhost:3000
+    allowed-origins: http://localhost:5173
 
 logging:
   level:

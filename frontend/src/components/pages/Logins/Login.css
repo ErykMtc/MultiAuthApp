@@ -1,4 +1,4 @@
-.login-container{
+.login-container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -6,30 +6,108 @@
     margin: 4rem 0;
 }
 
-.login-box{
+.login-box {
     display: flex;
     flex-direction: column;
+    /* align-items: center; */
     padding: 3.5rem;
-    border: 1px solid gray;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
 }
 
-.login-box h1{
-    font-size: 40px;
+.login-box h1 {
+    font-size: 36px;
     margin: 0;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    color: #333;
 }
 
-.login-box label{
-    font-size: 20px;
+.login-box label {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 0.5rem;
 }
 
-.login-box input{
-    margin: 0.5rem 0 1rem 0;
-    font-size: 20px;
-    padding: 0.5rem 0.875rem;
+.login-box input {
+    margin: 0.5rem 0 1.5rem 0;
+    font-size: 16px;
+    padding: 0.75rem 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: calc(100%-2rem);
 }
 
-.login-box button{
-    font-size: 22px;
+.login-box button {
+    font-size: 18px;
     padding: 1rem 0;
+    background-color: #1755b1;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 2rem;
+    transition: background-color 0.3s ease;
+}
+
+.login-box button:hover {
+    background-color: #004691;
+}
+
+.oauth-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.oauth-container a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 0;
+    font-size: 18px;
+    width: 100%;
+    margin-bottom: 1rem;
+    border-radius: 5px;
+    text-decoration: none;
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+.google-login {
+    background-color: #4285F4;
+}
+
+.google-login:hover {
+    background-color: #357ae8;
+}
+
+.github-login {
+    background-color: #333;
+}
+
+.github-login:hover {
+    background-color: #24292e;
+}
+
+.oauth-container .icon {
+    margin-right: 8px;
+    font-size: 20px;
+}
+
+.login-problem {
+    color: red;
+    margin-bottom: 1rem;
+    font-size: 14px;
+}
+
+.captcha{
+    text-align: center;
+    width: 100%;
+    display: flex;
+    align-items: center;
 }

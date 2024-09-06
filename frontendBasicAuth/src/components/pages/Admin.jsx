@@ -36,14 +36,25 @@ export const Admin = () => {
 
         const fetchData = async () => {
             try {
-                const requestOptions = {
-                    method: "GET",
-                    redirect: "follow"
-                };
+                const credentials = localStorage.getItem('credentials');
 
-                const response = await fetch("http://localhost:8080/users/", requestOptions);
+                if (!credentials) {
+                    console.error("No credentials found");
+                    return;
+                }
+                const myHeaders = new Headers();
+myHeaders.append("Authorization", "Basic " + credentials);
+
+const requestOptions = {
+  method: "GET",
+  headers: myHeaders,
+  redirect: "follow"
+};
+
+const response = await fetch("http://localhost:8080/users/", requestOptions);
                 const result = await response.json();
                 setUserList(result);
+                console.log(result)
             } catch (error) {
                 console.error("Error fetching data:", error);
             }

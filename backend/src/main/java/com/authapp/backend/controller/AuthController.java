@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Objects;
 
 @CrossOrigin(origins = "*")
@@ -20,6 +21,11 @@ public class AuthController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private UserService userService;
+
+
 //    @GetMapping("/")
 //    public String handleLogin(){
 //        return "ddd";
@@ -39,6 +45,23 @@ public class AuthController {
         AuthResponse res = new AuthResponse();
         res.copyFrom(user);
         return ResponseEntity.ok(res);
+    }
+
+    @PostMapping("/unseclogin")
+    public ResponseEntity<?> handleUnsecLogin(@RequestBody AuthRequest req) {
+        if (req.getLogin() == null || req.getPwd() == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid data");
+        }
+
+        // Użycie niebezpiecznej metody z SQL Injection
+        List<User> users = userService.unSecFindUserByName(req.getLogin());
+
+        if (users.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
+        }
+
+        // Możesz zwrócić listę użytkowników, lub odpowiedni wynik w zależności od kontekstu
+        return ResponseEntity.ok(users);
     }
 
 

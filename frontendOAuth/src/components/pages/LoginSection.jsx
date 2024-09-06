@@ -14,9 +14,9 @@ export const LoginSection = () => {
                             <div className="auth-icon"></div>
                             <div className="auth-content">
                                 <ul>
+                                    <li>Proste Logowanie</li>
                                     <li>Uwierzytelnianie: hasłem</li>
-                                    <li>Protokół: HTTP,</li>
-                                    <li>Sesja: w cookies niezabezpieczona,</li>
+                                    <li>Sesja: w cookies,</li>
                                     <li>Hasła w bazie: nieszyfrowane</li>
                                 </ul>
                             </div>
@@ -32,9 +32,9 @@ export const LoginSection = () => {
                             <div className="auth-icon"></div>
                             <div className="auth-content">
                                 <ul>
+                                    <li>Logowanie Basic Auth</li>
                                     <li>Uwierzytelnianie: hasłem,</li>
-                                    <li>Protokół: HTTPS,</li>
-                                    <li>Sesja: w cookies zabezpieczona,</li>
+                                    <li>Sesja: local storage,</li>
                                     <li>Hasła w bazie: szyfrowane</li>
                                 </ul>
                             </div>
@@ -50,9 +50,9 @@ export const LoginSection = () => {
                             <div className="auth-icon"></div>
                             <div className="auth-content">
                                 <ul>
-                                    <li>Uwierzytelnianie: hasłem,</li>
-                                    <li>Protokół: HTTPS,</li>
-                                    <li>Sesja: JWT,</li>
+                                    <li>Logowanie OAuth</li>
+                                    <li>Uwierzytelnianie: hasło lub token,</li>
+                                    <li>Sesja: Cookies token,</li>
                                     <li>Hasła w bazie: haszowane</li>
                                 </ul>
                             </div>

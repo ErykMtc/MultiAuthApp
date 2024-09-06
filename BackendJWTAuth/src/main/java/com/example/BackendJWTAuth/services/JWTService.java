@@ -21,17 +21,19 @@ import java.util.function.Function;
 public class JWTService {
 
 
-    private String secretkey = "teddebesciak";
+    private String secretkey = "2324";
 
     public JWTService() {
 
-        try {
-            KeyGenerator keyGen = KeyGenerator.getInstance("HmacSHA256");
-            SecretKey sk = keyGen.generateKey();
-            secretkey = Base64.getEncoder().encodeToString(sk.getEncoded());
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
+//        try {
+//            KeyGenerator keyGen = KeyGenerator.getInstance("HmacSHA256");
+//            SecretKey sk = keyGen.generateKey();
+//            secretkey = Base64.getEncoder().encodeToString(sk.getEncoded());
+            String rawSecretKey = "twojbardzodlugisekretnykluczodpowiedniejdlugosciohtakto";  // Dowolny ciąg znaków
+            this.secretkey = Base64.getEncoder().encodeToString(rawSecretKey.getBytes());
+//        } catch (NoSuchAlgorithmException e) {
+//            throw new RuntimeException(e);
+//        }
     }
 
     public String generateToken(UserDetails userDetails) {
@@ -41,7 +43,7 @@ public class JWTService {
                 .setClaims(claims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 60 * 60 * 30))
+                .setExpiration(new Date(System.currentTimeMillis() + 60 * 60 * 60))
                 .signWith(getKey())
                 .compact();
 
