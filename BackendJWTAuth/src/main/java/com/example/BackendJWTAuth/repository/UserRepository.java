@@ -16,6 +16,8 @@ public interface UserRepository extends ListCrudRepository<User, Integer> {
     boolean existsById(@Param("userId") Integer userId);
     @Query("SELECT u FROM User u WHERE u.name = :name")
     Optional<User> foundUser(@Param("name") String name);
+    @Query("SELECT u FROM User u WHERE u.refreshToken = :refreshToken")
+    Optional<User> findByRefreshToken(@Param("refreshToken") String refreshToken);
     @Modifying
     @Transactional
     @Query("DELETE FROM User u WHERE u.name = :name")
@@ -24,6 +26,10 @@ public interface UserRepository extends ListCrudRepository<User, Integer> {
     @Transactional
     @Query("UPDATE User u SET u.password = :password WHERE u.id = :userId")
     void updatePassword(@Param("userId") Integer userId, @Param("password") String password);
+    @Modifying
+    @Transactional
+    @Query("UPDATE User u SET u.refreshToken = :refreshToken WHERE u.id = :userId")
+    void updateRefreshToken(@Param("userId") Integer userId, @Param("refreshToken") String refreshToken);
     @Modifying
     @Transactional
     @Query("UPDATE User u SET u.name = :name WHERE u.id = :userId")

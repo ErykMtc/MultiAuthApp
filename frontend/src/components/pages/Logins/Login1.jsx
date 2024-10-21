@@ -42,7 +42,7 @@ export const Login1 = () => {
             setLoginProblem(result);
         } else {
             console.log(result); // Access the role property
-            Cookies.set('AuthApp', JSON.stringify({login: result.login, pwd: result.pwd, role: result.role}));
+            Cookies.set('AuthApp', JSON.stringify({login: result.login, pwd: result.pwd, role: result.role, userId: result.userId}));
         }
     })
     .catch((error) => console.error(error));

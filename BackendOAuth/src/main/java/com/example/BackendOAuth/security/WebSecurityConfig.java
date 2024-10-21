@@ -40,9 +40,7 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
                         .requestMatchers(HttpMethod.GET, "/posts", "/posts/**").hasAnyAuthority(ADMIN, USER)
                         .requestMatchers(HttpMethod.POST, "/posts/add").hasAnyAuthority(ADMIN, USER)
-                        .requestMatchers(HttpMethod.GET, "/users/me").hasAnyAuthority(ADMIN, USER)
-                        .requestMatchers("/api/movies", "/api/movies/**").hasAnyAuthority(ADMIN)
-                        .requestMatchers("/users", "/users/**").hasAnyAuthority(USER)
+                        .requestMatchers("/users", "/users/**").hasAnyAuthority(ADMIN)
                         .requestMatchers("/public/**", "/auth/**", "/oauth2/**").permitAll()
                         .requestMatchers("/", "/error", "/csrf", "/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs", "/v3/api-docs/**").permitAll()
                         .anyRequest().authenticated())

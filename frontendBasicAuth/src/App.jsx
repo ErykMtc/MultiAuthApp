@@ -17,11 +17,11 @@ function App() {
 
   const ProtectedRoute = ({ role, children }) => {
     const userRole = localStorage.getItem('userRole');
-    if (userRole !== role) {
+    if (!role.includes(userRole)) {
         return <Navigate to="/unauthorized" />; // Redirect if role doesn't match
     }
     return children;
-};
+  };
 
   return (
     <>
@@ -30,8 +30,8 @@ function App() {
         <div className="">
           <Routes>
             <Route path='/' element={<Home />} />
-            <Route path="/admin" element={<ProtectedRoute role="ADMIN"><Admin /></ProtectedRoute>} />
-            <Route path="/client" element={<ProtectedRoute role="USER"><Client /></ProtectedRoute>} />
+            <Route path="/admin" element={<ProtectedRoute role={['ADMIN']}><Admin /></ProtectedRoute>} />
+            <Route path="/client" element={<ProtectedRoute role={['USER', 'ADMIN']} ><Client /></ProtectedRoute>} />
             <Route path="/logins" element={<LoginSection />} />
             <Route path='/registers' element={<Register />} />
             <Route path='/login1' element={<Login1 />} />

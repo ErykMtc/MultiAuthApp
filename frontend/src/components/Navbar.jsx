@@ -1,38 +1,35 @@
 import React from "react";
 import { Link, useMatch, useResolvedPath } from "react-router-dom";
-import "./Navbar.css"
-import Cookies from 'js-cookie';
+import "./Navbar.css";
+import { BsPersonBoundingBox } from "react-icons/bs";
+import logo from '../../../images/PK.png';
 
 export const Navbar = () => {
-
-    return(
-        <>
-          <div className="navbar">
+    return (
+        <div className="navbar">
             <div className="navbar-pages">
-              logo
-              <CustomLink to="/">Strona Główna</CustomLink>
-              <CustomLink to="/client">Panel Klienta</CustomLink>
-              <CustomLink to="/admin">Panel Admina</CustomLink>
+                <img src={logo} alt="Logo" />
+                <CustomLink to="/">Strona Główna</CustomLink>
+                <CustomLink to="/client">Panel Klienta</CustomLink>
+                <CustomLink to="/admin">Panel Admina</CustomLink>
             </div>
             <div className="navbar-login">
-              <CustomLink to="/logins">Logowanie</CustomLink>
-              <CustomLink to="/registers">Rejestracja</CustomLink>
+                <CustomLink to="/registers" className="icon-link"><BsPersonBoundingBox className="login-icon" /></CustomLink>
+                <CustomLink to="/logins" className="login-button">Logowanie</CustomLink>
             </div>
-
-          </div>
-        </>
-    )
+        </div>
+    );
 }
 
-function CustomLink({ to, children, ...props }) {
-    const resolvedPath = useResolvedPath(to)
-    const isActive = useMatch({ path: resolvedPath.pathname, end: true })
-  
+function CustomLink({ to, children, className, ...props }) {
+    const resolvedPath = useResolvedPath(to);
+    const isActive = useMatch({ path: resolvedPath.pathname, end: true });
+
     return (
-      <li className={isActive ? "active" : ""}>
-        <Link to={to} {...props}>
-          {children}
-        </Link>
-      </li>
-    )
-  }
+        <li className={isActive ? `active ${className}` : className}>
+            <Link to={to} {...props}>
+                {children}
+            </Link>
+        </li>
+    );
+}

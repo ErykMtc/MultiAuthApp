@@ -53,28 +53,7 @@ export const Client = () => {
         };
         console.log(auth?.accessToken);
         fetchData();
-
-
-//         let data = '';
-
-//         let config = {
-//             method: 'get',
-//             maxBodyLength: Infinity,
-//             url: 'http://localhost:8080/posts/',
-//             headers: { 
-//               'Authorization': 'Bearer ' + auth?.accessToken
-//             },
-//             data : data
-//           };
-
-// axios.request(config)
-// .then((response) => {
-//     setPostList(response.data);
-// })
-// .catch((error) => {
-//   console.log(error);
-// });
-    }, []);
+    }, [axiosPrivate]);
 
     if (postList == null) return <p>Loading...</p>;
 
@@ -82,14 +61,27 @@ export const Client = () => {
         <>
             <div className="container container-full-screen">
                 <h1>Wprowadź dane</h1>
-                <div className='form-content'>
-                    <span>Nick: Ala_ma_kota</span>
-                    <label htmlFor="">Tytuł</label>
-                    <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
-                    <label htmlFor="w3review">Opis:</label>
-                    <textarea rows="4" cols="50" value={descrition} onChange={(e) => setDescription(e.target.value)}></textarea>
+                <div className="form-content content-section">
+                    <span>Nick: {auth?.username}</span>
+                    <label htmlFor="title">Tytuł:</label>
+                    <input 
+                        id="title" 
+                        type="text" 
+                        value={title} 
+                        onChange={(e) => setTitle(e.target.value)} 
+                        className="input-field"
+                    />
+                    <label htmlFor="description">Opis:</label>
+                    <textarea 
+                        id="description" 
+                        rows="4" 
+                        cols="50" 
+                        value={descrition} 
+                        onChange={(e) => setDescription(e.target.value)} 
+                        className="input-field"
+                    ></textarea>
+                    <button className="client-btn" onClick={() => handleLogin()}>Dodaj</button>
                 </div>
-                <button className='client-btn' onClick={() => handleLogin()}>Dodaj</button>
             </div>
 
             <div className="container container-full-screen">

@@ -25,12 +25,6 @@ public class AuthController {
     @Autowired
     private UserService userService;
 
-
-//    @GetMapping("/")
-//    public String handleLogin(){
-//        return "ddd";
-//    }
-
     @PostMapping("/")
     public ResponseEntity<?> handleLogin(@RequestBody AuthRequest req){
         if(req.getLogin() == null || req.getPwd() == null){

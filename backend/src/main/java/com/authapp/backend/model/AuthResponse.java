@@ -1,9 +1,18 @@
 package com.authapp.backend.model;
 
 public class AuthResponse {
+    private Integer userId;
     private String login;
     private String pwd;
     private User.Role role;
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
 
     public User.Role getRole() {
         return role;
@@ -30,6 +39,7 @@ public class AuthResponse {
     }
 
     public void copyFrom(User user){
+        this.userId = user.getId();
         this.login = user.getName();
         this.pwd = user.getPassword();
         this.role = user.getRole();

@@ -18,13 +18,14 @@ export const Login1 = () => {
         try {
             const response = await axios.post("/auth/login", 
                 JSON.stringify({
-                  "login": username,
-                  "pwd": password
+                    "login": username,
+                    "pwd": password
                 }), 
                 {
-                  headers: { 'Content-Type': 'application/json' }
+                    headers: { 'Content-Type': 'application/json' },
+                    withCredentials: true
                 }
-              );
+            );
 
               const accessToken = response?.data?.token;
               const role = response?.data?.role;

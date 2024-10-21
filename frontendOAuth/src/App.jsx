@@ -32,7 +32,7 @@ function App() {
             <Route element={<ProtectedRoutes allowedRoles={[ROLES.Admin, ROLES.User]} />}>
               <Route path="/client" element={<Client />} />
             </Route>
-            <Route element={<ProtectedRoutes allowedRoles={[ROLES.Admin]} />}>
+            <Route element={<ProtectedRoutes allowedRoles={[ROLES.Admin, ROLES.User]} />}>
               <Route path="/admin" element={<Admin />} />
             </Route>
             <Route path="/logins" element={<LoginSection />} />

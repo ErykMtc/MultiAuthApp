@@ -5,6 +5,9 @@ import com.example.BackendJWTAuth.model.AuthResponse;
 import com.example.BackendJWTAuth.model.JwtUser;
 import com.example.BackendJWTAuth.model.User;
 import com.example.BackendJWTAuth.repository.UserRepository;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,9 +20,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+
+import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 @Service
 public class UserService {
@@ -60,7 +66,7 @@ public class UserService {
         throw new IllegalArgumentException("Unsuccessfully login");
     }
 
-    public JwtUser verify(AuthRequest authRequest) {
+    public JwtUser verify(AuthRequest authRequest, HttpServletResponse response) {
         if (userRepository.existsByName(authRequest.getLogin())) {
             User user = userRepository.foundUser(authRequest.getLogin())
                     .orElseThrow(() -> new UsernameNotFoundException("User not found"));
@@ -71,12 +77,75 @@ public class UserService {
 
                 JwtUser jwtUser = new JwtUser();
                 jwtUser.setToken(jwtService.generateToken(userDetails));
+                jwtUser.setRefreshToken(jwtService.generateRefreshToken(userDetails));
+                
                 jwtUser.copyFrom(user);
+
+                userRepository.updateRefreshToken(jwtUser.getId(), jwtUser.getRefreshToken());
+
+                // Add the refresh token as an HTTP-only cookie
+                Cookie refreshTokenCookie = new Cookie("refreshToken", jwtUser.getRefreshToken());
+                refreshTokenCookie.setHttpOnly(true);  // Prevents JavaScript access to the cookie
+                refreshTokenCookie.setSecure(true);    // Only send over HTTPS
+                refreshTokenCookie.setPath("/");       // Cookie will be sent to all paths in the domain
+                refreshTokenCookie.setMaxAge(60 * 60 * 24 * 7); // 1 week expiry
+
+                response.addCookie(refreshTokenCookie);
 
                 return jwtUser;
             }
         }
         throw new IllegalArgumentException("Unsuccessfully login");
+    }
+
+    public ResponseEntity<?> getNewAccessToken(HttpServletRequest request, HttpServletResponse response){
+
+        Cookie[] cookies = request.getCookies();
+        String refreshToken = null;
+
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if ("refreshToken".equals(cookie.getName())) {
+                    refreshToken = cookie.getValue();
+                    break;
+                }
+            }
+        }
+
+        if (refreshToken == null || refreshToken.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Refresh token is missing");
+        }
+
+        Optional<User> userOptional = getUserFromRefreshToken(refreshToken);
+        if (userOptional.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid refresh token");
+        }
+
+        User user = userOptional.get();
+        String newAccessToken = "";
+
+        Authentication authentication = authManager.authenticate(new UsernamePasswordAuthenticationToken(user.getName(), user.getPassword()));
+        if (authentication.isAuthenticated()) {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+
+            if (!jwtService.validateRefreshToken(refreshToken, userDetails)) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid refresh token");
+            }
+
+            newAccessToken = jwtService.generateToken(userDetails);
+        }
+
+        HashMap<String, Object> responseBody = new HashMap<>();
+
+        responseBody.put("accessToken", newAccessToken);
+        responseBody.put("userid", user.getId());
+        responseBody.put("role", user.getRole());
+
+        return ResponseEntity.ok(responseBody);
+    }
+
+    public Optional<User> getUserFromRefreshToken(String refreshToken) {
+        return userRepository.findByRefreshToken(refreshToken);
     }
 
     public List<User> getAllUsers(){

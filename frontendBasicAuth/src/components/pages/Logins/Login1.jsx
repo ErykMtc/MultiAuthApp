@@ -32,7 +32,7 @@ export const Login1 = () => {
                 const base64Credentials = btoa(`${username}:${password}`);
                 localStorage.setItem('userRole', result.role); // Store role in localStorage
                 localStorage.setItem('credentials', base64Credentials)
-                // localStorage.setItem('token', result.token); // Store token in localStorage
+                localStorage.setItem('userId', result.userId)
             }
         } catch (error) {
             console.error(error);

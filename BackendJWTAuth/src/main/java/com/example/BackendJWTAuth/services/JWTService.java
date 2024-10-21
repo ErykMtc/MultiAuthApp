@@ -43,10 +43,26 @@ public class JWTService {
                 .setClaims(claims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 60 * 60 * 60))
+                .setExpiration(new Date(System.currentTimeMillis() + 60 * 60))
                 .signWith(getKey())
                 .compact();
 
+    }
+
+    public String generateRefreshToken(UserDetails userDetails) {
+        Map<String, Object> claims = new HashMap<>();
+        return Jwts.builder()
+                .setClaims(claims)
+                .setSubject(userDetails.getUsername())
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + 60 * 60 * 60 * 1000))
+                .signWith(getKey())
+                .compact();
+    }
+
+    public boolean validateRefreshToken(String refreshToken, UserDetails userDetails) {
+        final String username = extractUserName(refreshToken);
+        return (username.equals(userDetails.getUsername()) && !isTokenExpired(refreshToken));
     }
 
     private SecretKey getKey() {

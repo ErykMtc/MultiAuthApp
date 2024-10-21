@@ -6,6 +6,10 @@ export const Client = () => {
     const [postList, setPostList] = useState(null);
     const [title, setTitle] = useState("");
     const [descrition, setDescription] = useState("");
+    const [username, setUsername] = useState("");
+
+    const userId = localStorage.getItem("userId");
+    // let userName = "";
 
     const handleLogin = () => {
         try {
@@ -15,7 +19,7 @@ export const Client = () => {
             const raw = JSON.stringify({
                 "title": title,
                 "content": descrition,
-                "userId": 1
+                "userId": userId
             });
 
             const requestOptions = {
@@ -47,6 +51,8 @@ export const Client = () => {
                 const myHeaders = new Headers();
                 myHeaders.append("Authorization", "Basic " + credentials);
 
+                setUsername(atob(credentials).split(':')[0]);
+
                 const requestOptions = {
                 method: "GET",
                 headers: myHeaders,
@@ -70,14 +76,27 @@ export const Client = () => {
         <>
             <div className="container container-full-screen">
                 <h1>Wprowadź dane</h1>
-                <div className='form-content'>
-                    <span>Nick: Ala_ma_kota</span>
-                    <label htmlFor="">Tytuł</label>
-                    <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
-                    <label htmlFor="w3review">Opis:</label>
-                    <textarea rows="4" cols="50" value={descrition} onChange={(e) => setDescription(e.target.value)}></textarea>
+                <div className="form-content content-section">
+                    <span>Nick: {username}</span>
+                    <label htmlFor="title">Tytuł:</label>
+                    <input 
+                        id="title" 
+                        type="text" 
+                        value={title} 
+                        onChange={(e) => setTitle(e.target.value)} 
+                        className="input-field"
+                    />
+                    <label htmlFor="description">Opis:</label>
+                    <textarea 
+                        id="description" 
+                        rows="4" 
+                        cols="50" 
+                        value={descrition} 
+                        onChange={(e) => setDescription(e.target.value)} 
+                        className="input-field"
+                    ></textarea>
+                    <button className="client-btn" onClick={() => handleLogin()}>Dodaj</button>
                 </div>
-                <button className='client-btn' onClick={() => handleLogin()}>Dodaj</button>
             </div>
 
             <div className="container container-full-screen">

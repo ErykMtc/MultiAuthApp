@@ -2,7 +2,7 @@ import React from "react";
 import { Link, useMatch, useResolvedPath } from "react-router-dom";
 import "./Navbar.css";
 import { BsPersonBoundingBox } from "react-icons/bs";
-import logo from '../assets/PK.png';
+import logo from '../../../images/PK.png';
 
 export const Navbar = () => {
     return (

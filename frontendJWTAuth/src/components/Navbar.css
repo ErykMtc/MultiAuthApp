@@ -1,33 +1,43 @@
 :root{
     --navCol: rgb(0, 0, 0);
     --acceleration: 0.3s;
+    --primary-bg: #1755b1;
+    --hover-bg: #0056b3;
 }
 
-.navbar{
+.navbar {
     display: flex;
     flex-direction: row;
     align-items: center;
     height: 5rem;
     gap: 2rem;
     padding: 0 6%;
-    /* border-bottom: 1px solid gray; */
     background-color: #f4f5f7;
     font-size: 1.125rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
 }
 
-.navbar-login{
+.navbar-login {
     display: flex;
     flex-direction: row;
     gap: 1rem;
     flex: 1;
-    justify-content: right;
+    justify-content: flex-end;
 }
 
-.navbar-pages{
+.navbar-pages {
     display: flex;
     flex-direction: row;
+    align-items: center;
     flex: 2;
-    gap: 1rem;
+    gap: 2rem;
+}
+
+.navbar-pages img {
+    width: 54px;
+    height: 54px;
+    /* border-radius: 50%; */
 }
 
 li {
@@ -37,54 +47,98 @@ li {
 a {
     text-decoration: none;
     color: var(--navCol);
-    /* padding: 0.5rem; */
+    transition: color 0.3s ease-in-out;
 }
 
-.navbar-pages li{
+.navbar-pages li {
     position: relative;
     cursor: pointer;
 }
 
 .navbar-pages li::after,
-.navbar-pages li::before{
+.navbar-pages li::before {
     position: absolute;
     display: block;
     content: '';
     width: 0px;
     height: 2px;
-    bottom: 0;
+    bottom: -5px;
     background-color: var(--navCol);
+    transition: width 0.3s ease;
 }
 
-.navbar-pages li::after{
+.navbar-pages li::after {
     left: 0;
-    transition: width var(--acceleration);
 }
 
-.navbar-pages li::before{
+.navbar-pages li::before {
     right: 0;
-    
 }
 
-.navbar-pages li:hover::before{
+.navbar-pages li:hover::before {
     width: 100%;
-    transition: width var(--acceleration);
 }
 
-.navbar-pages li:hover::after{
+.navbar-pages li:hover::after {
     background-color: transparent;
     width: 100%;
 }
 
-.navbar-login li{
-    border: 4px solid black;
-    padding: 0.75rem;
+.navbar-pages li:hover a {
+    color: var(--primary-bg);
 }
 
-.navbar-login li:nth-child(2){
-    background-color: black;
+.navbar-login li:nth-child(2) {
+    background-color: var(--primary-bg);
+    border-radius: 8px;
+    padding: 0.75rem 1.25rem;
+    transition: background-color 0.3s ease-in-out;
 }
 
-.navbar-login li:nth-child(2)>a{
+.navbar-login li:nth-child(2):hover {
+    background-color: var(--hover-bg);
+}
+
+.navbar-login li:nth-child(2) > a {
     color: white;
+}
+
+.icon-link .login-icon {
+    font-size: 52px;
+    color: #333333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-button {
+    background-color: var(--primary-bg);
+    color: white;
+    padding: 0.75rem 1.25rem;
+    border-radius: 8px;
+    transition: background-color 0.3s ease-in-out;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-button:hover {
+    background-color: var(--hover-bg);
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        padding: 1rem;
+    }
+    
+    .navbar-pages {
+        justify-content: center;
+        margin-bottom: 1rem;
+    }
+    
+    .navbar-login {
+        justify-content: center;
+    }
 }

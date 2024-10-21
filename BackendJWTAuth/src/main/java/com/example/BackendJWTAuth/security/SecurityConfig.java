@@ -15,6 +15,11 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
+
+import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
@@ -23,28 +28,6 @@ public class SecurityConfig {
     @Autowired
     private UserDetailsService userDetailsService;
 
-//    @Autowired
-//    private JwtRequestFilter jwtRequestFilter;
-
-//    @Bean
-//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//        http
-//                .csrf(csrf -> csrf.ignoringRequestMatchers("/posts/**", "/auth/**", "/users/**"))
-//                .authorizeHttpRequests(req -> req
-//                        .requestMatchers("/auth/**").permitAll()
-//                        .requestMatchers(HttpMethod.POST, "/posts/**").hasRole("USER")
-//                        .requestMatchers(HttpMethod.DELETE, "/users/**").hasRole("USER")
-//                        .requestMatchers(HttpMethod.PUT, "/users/**").hasRole("USER")
-//                        .requestMatchers("/users/**").hasRole("USER")
-//                        .anyRequest().authenticated()
-//                )
-//                .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
-//                .authenticationProvider(authenticationProvider)
-//                .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
-//
-//        return http.build();
-//    }
-
     @Autowired
     private JwtFilter jwtFilter;
 
@@ -52,6 +35,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         return http.csrf(csrf -> csrf.ignoringRequestMatchers("/posts/**", "/auth/**", "/users/**")).
+                cors(Customizer.withDefaults()).
                 authorizeHttpRequests(request -> request
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/posts/**").hasAnyRole("USER", "ADMIN")
@@ -61,8 +45,18 @@ public class SecurityConfig {
                 sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
+    }
 
-
+    @Bean
+    public CorsFilter corsFilter() {
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        CorsConfiguration corsConfig = new CorsConfiguration();
+        corsConfig.setAllowedOrigins(Arrays.asList("http://localhost:5173"));  // Zezwól na frontend
+        corsConfig.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        corsConfig.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
+        corsConfig.setAllowCredentials(true);  // Pozwala na ciasteczka (opcjonalnie)
+        source.registerCorsConfiguration("/**", corsConfig);  // Dla wszystkich ścieżek
+        return new CorsFilter(source);
     }
 
     @Bean

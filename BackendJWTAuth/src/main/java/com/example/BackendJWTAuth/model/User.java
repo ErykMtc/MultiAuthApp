@@ -21,6 +21,7 @@ public class User {
     private String password;
 
     private Role role;
+    private String refreshToken;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Post> posts = new ArrayList<>();
@@ -62,7 +63,15 @@ public class User {
         return role;
     }
 
-//    public String getRoleString() {
+    public String getRefreshToken() {
+        return refreshToken;
+    }
+
+    public void setRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
+    }
+
+    //    public String getRoleString() {
 //        return role.toString();
 //    }
 

@@ -3,6 +3,8 @@ package com.example.BackendJWTAuth.model;
 public class JwtUser {
         private Integer id;
         private User.Role role;
+        private String token;
+        private String refreshToken;
 
         public String getToken() {
             return token;
@@ -12,6 +14,14 @@ public class JwtUser {
             this.token = token;
         }
 
+        public String getRefreshToken() {
+            return refreshToken;
+        }
+
+        public void setRefreshToken(String refreshToken) {
+            this.refreshToken = refreshToken;
+        }
+
         public Integer getId() {
             return id;
         }
@@ -19,8 +29,6 @@ public class JwtUser {
         public void setId(Integer id) {
             this.id = id;
         }
-
-        private String token;
 
         public User.Role getRole() {
             return role;

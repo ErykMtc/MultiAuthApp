@@ -34,7 +34,7 @@ public class SecurityConfig {
         http.csrf(csrf -> csrf.ignoringRequestMatchers("/posts/**", "/auth/**", "/users/**"))
                 .authorizeHttpRequests((authorize) -> authorize
                         .requestMatchers("/auth/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/posts/**").hasRole("USER")
+                        .requestMatchers(HttpMethod.POST, "/posts/**").hasAnyRole("ADMIN", "USER")
                         .requestMatchers(HttpMethod.DELETE, "/users/**").hasAnyRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/users/**").hasRole("USER")
                         .requestMatchers("/users/**").hasRole("ADMIN")

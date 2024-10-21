@@ -3,18 +3,17 @@ import useAuth from './useAuth';
 
 const useRefreshToken = () => {
     const { setAuth } = useAuth();
-
     const refresh = async () => {
-        const response = await axios.get('/refresh', {
+        console.log("dd")
+        const response = await axios.get('/auth/refresh', {
             withCredentials: true
         });
+        console.log(response.data)
         setAuth(prev => {
-            // console.log(JSON.stringify(prev));
-            // console.log("aaaaa", response.data);
             return {
                 ...prev,
-                roles: response.data.roles,
                 accessToken: response.data.accessToken,
+                role: response.data.role,
                 userid: response.data.userid
             }
         });

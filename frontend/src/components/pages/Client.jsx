@@ -1,11 +1,15 @@
 import { useEffect, useState } from 'react'
 import './Client.css'
 import { RxAvatar } from "react-icons/rx";
+import Cookies from 'js-cookie';
 
 export const Client = () => {
     const [postList, setPostList] = useState(null);
     const [title, setTitle] = useState("");
     const [descrition, setDescription] = useState("");
+
+    const authCookie = Cookies.get('AuthApp');
+    const user = JSON.parse(authCookie);
 
     const handleLogin = () =>{
         try{
@@ -15,7 +19,7 @@ export const Client = () => {
             const raw = JSON.stringify({
                 "title": title,
                 "content": descrition,
-                "userId": 1 
+                "userId": user.userId
             });
 
             const requestOptions = {
@@ -53,20 +57,35 @@ export const Client = () => {
         fetchData();
     }, []);
 
+
+
     if (postList == null) return <p>Loading...</p>;
 
     return (
         <>
             <div className="container container-full-screen">
                 <h1>Wprowadź dane</h1>
-                <div className='form-content'>
-                    <span>Nick: Ala_ma_kota</span>
-                    <label htmlFor="">Tytuł</label>
-                    <input type="text" value={title} onChange={(e) => setTitle(e.target.value)}/>
-                    <label htmlFor="w3review">Opis:</label>
-                    <textarea rows="4" cols="50" value={descrition} onChange={(e) => setDescription(e.target.value)}></textarea>
+                <div className="form-content content-section">
+                    <span>Nick: {user.login}</span>
+                    <label htmlFor="title">Tytuł:</label>
+                    <input 
+                        id="title" 
+                        type="text" 
+                        value={title} 
+                        onChange={(e) => setTitle(e.target.value)} 
+                        className="input-field"
+                    />
+                    <label htmlFor="description">Opis:</label>
+                    <textarea 
+                        id="description" 
+                        rows="4" 
+                        cols="50" 
+                        value={descrition} 
+                        onChange={(e) => setDescription(e.target.value)} 
+                        className="input-field"
+                    ></textarea>
+                    <button className="client-btn" onClick={() => handleLogin()}>Dodaj</button>
                 </div>
-                <button className='client-btn' onClick={() => handleLogin()}>Dodaj</button>
             </div>
 
             <div className="container container-full-screen">

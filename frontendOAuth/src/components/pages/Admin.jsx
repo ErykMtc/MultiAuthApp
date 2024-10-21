@@ -3,8 +3,14 @@ import { FaTrashCan } from "react-icons/fa6";
 import { RxAvatar } from "react-icons/rx";
 import "./Admin.css"
 
+import useAuth from '../../hooks/useAuth';
+import useAxiosPrivate from '../../hooks/useAxiosPrivate';
+
 export const Admin = () => {
     const [userList, setUserList] = useState(null);
+
+    const axiosPrivate = useAxiosPrivate();
+    const { auth } = useAuth();
 
 
     const handleRoleChange = async (e) => {
@@ -41,9 +47,8 @@ export const Admin = () => {
                     redirect: "follow"
                 };
 
-                const response = await fetch("http://localhost:8080/users/", requestOptions);
-                const result = await response.json();
-                setUserList(result);
+                const response = await axiosPrivate.get("/users/");
+                setUserList(response.data);
             } catch (error) {
                 console.error("Error fetching data:", error);
             }

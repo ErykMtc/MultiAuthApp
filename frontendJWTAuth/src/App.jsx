@@ -13,6 +13,7 @@ import './App.css';
 import { Footer } from './components/Footer';
 import { LoginSection } from './components/pages/LoginSection';
 import ProtectedRoutes from './hooks/ProtectedRoutes';
+import PersistLogin from './components/PersitLogin'
 
 const ROLES = {
   "Admin": "ADMIN",
@@ -27,15 +28,18 @@ function App() {
         <Navbar/>
         <div className="">
           <Routes>
-            <Route path='/' element={<Home />} />
             <Route element={<ProtectedRoutes allowedRoles={[ROLES.Admin, ROLES.User]} />}>
               <Route path="/client" element={<Client />} />
             </Route>
             <Route element={<ProtectedRoutes allowedRoles={[ROLES.Admin]} />}>
               <Route path="/admin" element={<Admin />} />
             </Route>
-            <Route path="/logins" element={<LoginSection />} />
-            <Route path='/registers' element={<Register />} />
+            <Route element={<PersistLogin/>}>
+              <Route path='/' element={<Home />} />
+              <Route path="/logins" element={<LoginSection />} />
+              <Route path='/registers' element={<Register />} />
+            </Route>
+
             <Route path='/login1' element={<Login1 />} />
             <Route path='/register1' element={<Registration1 />} />
           </Routes>

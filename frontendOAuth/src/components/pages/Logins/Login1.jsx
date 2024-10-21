@@ -4,6 +4,7 @@ import useAuth from "../../../hooks/useAuth";
 import { FaGoogle, FaGithub } from 'react-icons/fa';
 import { getSocialLoginUrl } from '../OAuthUtils/OAuthHelper';
 import axios from 'axios';
+import { parseJwt } from '../OAuthUtils/OAuthHelper';
 
 export const Login1 = () => {
     const [username, setUsername] = useState('');
@@ -23,11 +24,13 @@ export const Login1 = () => {
                 }
             );
 
-            const accessToken = response?.data?.token;
-            const role = response?.data?.role;
-            const userid = response?.data?.id;
+            const accessToken = response?.data;
+            const dataRole = parseJwt(accessToken);
+            const role = dataRole.rol[0];
 
-            setAuth({ username, password, role, accessToken, userid });
+            console.log(role)
+
+            setAuth({ username, password, role, accessToken});
 
             setPassword("");
             setUsername("");
