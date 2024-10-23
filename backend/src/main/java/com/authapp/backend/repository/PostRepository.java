@@ -1,14 +1,12 @@
 package com.authapp.backend.repository;
 
 import com.authapp.backend.model.Post;
-import com.authapp.backend.model.PostView;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.ListCrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.beans.Transient;
 import java.util.List;
 
 public interface PostRepository extends ListCrudRepository<Post, Integer> {

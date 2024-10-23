@@ -1,15 +1,12 @@
 package com.authapp.backend.controller;
 
-import com.authapp.backend.model.AuthRequest;
 import com.authapp.backend.model.User;
 import com.authapp.backend.repository.UserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @CrossOrigin(origins = "*")
@@ -71,7 +68,7 @@ public class UserController {
         User user = userOptional.get();
         user.setRole(role);
 
-        userRepository.save(user); // Save the updated user entity
+        userRepository.save(user);
 
         return ResponseEntity.ok("User role updated successfully");
     }

@@ -3,7 +3,7 @@ import './Login.css';
 import Cookies from 'js-cookie';
 import ReCAPTCHA from "react-google-recaptcha";
 
-export const Login1 = () => {
+export const Login = () => {
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -17,7 +17,6 @@ export const Login1 = () => {
 
     const handleLogin = async () => {
         if(!val){
-            console.log("nie")
             return;
         }
 
@@ -41,14 +40,12 @@ export const Login1 = () => {
         if(result === "Invalid credentials"){
             setLoginProblem(result);
         } else {
-            console.log(result); // Access the role property
             Cookies.set('AuthApp', JSON.stringify({login: result.login, pwd: result.pwd, role: result.role, userId: result.userId}));
+            window.location.replace("http://localhost:5173/");
         }
     })
-    .catch((error) => console.error(error));
+    .catch((error) => {});
     }
-
-    console.log(password, username);
 
     return (
         <>

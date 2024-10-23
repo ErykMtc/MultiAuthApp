@@ -43,24 +43,21 @@ public class PostController {
         if(bindingResult.hasErrors()){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid post data: " + bindingResult.getAllErrors());
         } else {
-            Integer userId = post.getUserId(); // Pobierz userId z pola userId w obiekcie Post
+            Integer userId = post.getUserId();
 
             if (userId == null) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User ID cannot be null");
             }
 
-            // Sprawdź czy użytkownik istnieje
             boolean userExists = userRepository.existsById(userId);
             if (!userExists) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User does not exist");
             }
 
-            // Utwórz obiekt użytkownika na podstawie userId
             User user = new User();
             user.setId(userId);
             post.setUser(user);
 
-            // Zapisz post
             postRepository.save(post);
             return ResponseEntity.ok("Post added successfully");
         }

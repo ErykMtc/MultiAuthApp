@@ -47,14 +47,12 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid data");
         }
 
-        // Użycie niebezpiecznej metody z SQL Injection
         List<User> users = userService.unSecFindUserByName(req.getLogin());
 
         if (users.isEmpty()) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
         }
 
-        // Możesz zwrócić listę użytkowników, lub odpowiedni wynik w zależności od kontekstu
         return ResponseEntity.ok(users);
     }
 
@@ -62,7 +60,6 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<String> registration(@Valid @RequestBody AuthRequest authRequest, BindingResult bindingResult) {
         if (bindingResult.hasErrors() || authRequest.getLogin() == null || authRequest.getPwd() == null) {
-            // Jeśli walidacja danych wejściowych nie powiodła się, zwróć błąd 400 (Bad Request) i listę błędów
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid user data: " + bindingResult.getAllErrors());
         } else {
             if (userRepository.existsByName(authRequest.getLogin())) {

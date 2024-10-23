@@ -7,7 +7,7 @@ export const Admin = () => {
     const [userList, setUserList] = useState(null);
 
 
-    const handleRoleChange = async (e) => {
+    const handleRoleChange = async (e, id) => {
         const requestOptions = {
             method: "PUT",
             redirect: "follow"
@@ -15,22 +15,26 @@ export const Admin = () => {
 
         var newRole = e.target.value;
 
-        const response = await fetch("http://localhost:8080/users/role/52?role=" + newRole, requestOptions)
-        const result = await response.json();
+        const response = await fetch("http://localhost:8080/users/role/"+ id +"?role=" + newRole, requestOptions);
     }
 
     const handleDelete = async (id) => {
         const raw = "";
-
+    
         const requestOptions = {
             method: "DELETE",
             body: raw,
             redirect: "follow"
         };
-
-        const response = await fetch("http://localhost:8080/users/" + id, requestOptions)
-        const result = await response.json();
-    }
+    
+        try {
+            const response = await fetch("http://localhost:8080/users/" + id, requestOptions);
+            if (response.ok) {
+                setUserList((prevUserList) => prevUserList.filter(user => user.id !== id));
+            }
+        } catch (error) {}
+    };
+    
 
     useEffect(() => {
 
@@ -45,7 +49,6 @@ export const Admin = () => {
                 const result = await response.json();
                 setUserList(result);
             } catch (error) {
-                console.error("Error fetching data:", error);
             }
         };
 
@@ -67,7 +70,7 @@ export const Admin = () => {
                                 <span className="admin-user-name">{item.name}</span>
                             </div>
                             <div className="admin-user-actions">
-                                <select className="admin-role-select" value={item.role} onChange={(e) => handleRoleChange(e)}>
+                                <select className="admin-role-select" value={item.role} onChange={(e) => handleRoleChange(e, item.id)}>
                                     <option value="USER">User</option>
                                     <option value="ADMIN">Admin</option>
                                 </select>

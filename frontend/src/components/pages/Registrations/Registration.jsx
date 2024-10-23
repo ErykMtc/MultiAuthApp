@@ -5,7 +5,7 @@ import "./Registration.css";
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,30}$/;
 
 
-export const Registration1 = () => {
+export const Registration = () => {
     const errRef = useRef();
 
     var [login, setLogin] = useState('');
@@ -51,10 +51,7 @@ export const Registration1 = () => {
             })
         };
 
-        fetch("http://localhost:8080/auth/register", requestOptions)
-            .then(res => res.text())
-            .then(result => console.log(result))
-            .catch(err => console.log(err));
+        fetch("http://localhost:8080/auth/register", requestOptions);
     }
 
     return (

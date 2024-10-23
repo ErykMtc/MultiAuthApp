@@ -11,7 +11,7 @@ export const Client = () => {
     const authCookie = Cookies.get('AuthApp');
     const user = JSON.parse(authCookie);
 
-    const handleLogin = () =>{
+    const handleLogin = async () =>{
         try{
             const myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/json");
@@ -29,12 +29,22 @@ export const Client = () => {
                 redirect: "follow"
             };
 
-            fetch("http://localhost:8080/posts/add", requestOptions)
-            .then((response) => response.text())
-            .then((result) => console.log(result))
+            const response = await fetch("http://localhost:8080/posts/add", requestOptions);
+
+            if (response.ok) {
+                const newPost = {
+                    title: title,
+                    content: descrition,
+                    userName: user.login,
+                };
+    
+                setPostList((prevPostList) => [...prevPostList, newPost]);
+    
+                setTitle("");
+                setDescription("");
+            }
 
         } catch(error){
-            console.error("Error fetching data:", error);
         }
     }
 
@@ -49,9 +59,7 @@ export const Client = () => {
                 const response = await fetch("http://localhost:8080/posts/", requestOptions);
                 const result = await response.json();
                 setPostList(result);
-            } catch (error) {
-                console.error("Error fetching data:", error);
-            }
+            } catch (error) {}
         };
 
         fetchData();
