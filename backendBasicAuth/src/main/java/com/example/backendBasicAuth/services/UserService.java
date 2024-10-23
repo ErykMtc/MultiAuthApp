@@ -28,7 +28,6 @@ public class UserService {
         if (userRepository.existsByName(username)) {
             throw new IllegalArgumentException("Username already exists");
         }
-//        User user = new User(username, passwordEncoder.encode(password), role);
 
         User user = new User(username, password, role);
         return userRepository.save(user);
@@ -38,8 +37,6 @@ public class UserService {
         if (userRepository.existsByName(username)) {
             User user = userRepository.foundUser(username)
                     .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-
-//            throw new IllegalArgumentException("Unsuccessfully login" + user.getPassword() + "   " + password);
 
             if(Objects.equals(user.getPassword(), password)){
                 AuthResponse res = new AuthResponse();
@@ -55,9 +52,9 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public ResponseEntity<String> deleteUser(String name) {
-        if (userRepository.existsByName(name)) {
-            userRepository.deleteByName(name);
+    public ResponseEntity<String> deleteUser(Integer id) {
+        if (userRepository.existsById(id)) {
+            userRepository.deleteById(id);
             return ResponseEntity.ok("User deleted successfully");
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
@@ -94,8 +91,7 @@ public class UserService {
         User user = userOptional.get();
         user.setRole(role);
 
-        userRepository.save(user); // Save the updated user entity
-
+        userRepository.save(user);
         return ResponseEntity.ok("User role updated successfully");
     }
 }

@@ -9,33 +9,49 @@ export const Client = () => {
     const [username, setUsername] = useState("");
 
     const userId = localStorage.getItem("userId");
-    // let userName = "";
 
-    const handleLogin = () => {
+    const handleLogin = async () => {
         try {
+
+            const credentials = localStorage.getItem('credentials');
+
+            if (!credentials) {
+                return;
+            }
+
             const myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/json");
+            myHeaders.append("Authorization", "Basic " + credentials);
 
             const raw = JSON.stringify({
-                "title": title,
-                "content": descrition,
-                "userId": userId
+            "title": title,
+            "content": descrition,
+            "userId": Number(userId)
             });
 
             const requestOptions = {
-                method: "POST",
-                headers: myHeaders,
-                body: raw,
-                redirect: "follow"
+            method: "POST",
+            headers: myHeaders,
+            body: raw,
+            redirect: "follow"
             };
 
-            fetch("http://localhost:8080/posts/add", requestOptions)
-                .then((response) => response.text())
-                .then((result) => console.log(result))
+            const response = await fetch("http://localhost:8080/posts/add", requestOptions);
 
-        } catch (error) {
-            console.error("Error fetching data:", error);
-        }
+            if (response.ok) {
+                const newPost = {
+                    title: title,
+                    content: descrition,
+                    userName: username,
+                };
+    
+                setPostList((prevPostList) => [...prevPostList, newPost]);
+    
+                setTitle("");
+                setDescription("");
+            }
+
+        } catch (error) {}
     }
 
     useEffect(() => {
@@ -44,7 +60,6 @@ export const Client = () => {
                 const credentials = localStorage.getItem('credentials');
 
                 if (!credentials) {
-                    console.error("No credentials found");
                     return;
                 }
 
@@ -62,9 +77,7 @@ export const Client = () => {
                 const response = await fetch("http://localhost:8080/posts/", requestOptions);
                 const result = await response.json();
                 setPostList(result);
-            } catch (error) {
-                console.error("Error fetching data:", error);
-            }
+            } catch (error) {}
         };
 
         fetchData();

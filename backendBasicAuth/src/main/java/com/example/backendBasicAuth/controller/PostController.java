@@ -28,6 +28,7 @@ public class PostController {
         return postService.getAllPost();
     }
 
+    @CrossOrigin(origins = "*")
     @PostMapping("/add")
     public ResponseEntity<String> addPost(@RequestBody Post post, BindingResult bindingResult) {
         String result = postService.addPost(post, bindingResult);

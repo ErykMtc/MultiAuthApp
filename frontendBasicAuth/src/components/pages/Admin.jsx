@@ -7,29 +7,53 @@ export const Admin = () => {
     const [userList, setUserList] = useState(null);
 
 
-    const handleRoleChange = async (e) => {
-        const requestOptions = {
-            method: "PUT",
-            redirect: "follow"
-        };
+    const handleRoleChange = async (e, id) => {
 
-        var newRole = e.target.value;
+        try {
+            const credentials = localStorage.getItem('credentials');
 
-        const response = await fetch("http://localhost:8080/users/role/52?role=" + newRole, requestOptions)
-        const result = await response.json();
+            if (!credentials) {
+                return;
+            }
+            const myHeaders = new Headers();
+            myHeaders.append("Authorization", "Basic " + credentials);
+
+            const requestOptions = {
+                method: "PUT",
+                headers: myHeaders,
+                redirect: "follow"
+              };
+
+            var newRole = e.target.value;
+
+            const response = await fetch("http://localhost:8080/users/role/"+ id +"?role=" + newRole, requestOptions);
+        } catch (error) {}   
     }
 
     const handleDelete = async (id) => {
-        const raw = "";
 
-        const requestOptions = {
-            method: "DELETE",
-            body: raw,
-            redirect: "follow"
-        };
+        try {
+            const credentials = localStorage.getItem('credentials');
 
-        const response = await fetch("http://localhost:8080/users/" + id, requestOptions)
-        const result = await response.json();
+            if (!credentials) {
+                return;
+            }
+            const myHeaders = new Headers();
+            myHeaders.append("Authorization", "Basic " + credentials);
+            const raw = "";
+
+            const requestOptions = {
+                method: "DELETE",
+                headers: myHeaders,
+                redirect: "follow"
+            };
+
+            const response = await fetch("http://localhost:8080/users/" + id, requestOptions);
+
+            if (response.ok) {
+                setUserList((prevUserList) => prevUserList.filter(user => user.id !== id));
+            }
+        } catch (error) {}
     }
 
     useEffect(() => {
@@ -39,25 +63,21 @@ export const Admin = () => {
                 const credentials = localStorage.getItem('credentials');
 
                 if (!credentials) {
-                    console.error("No credentials found");
                     return;
                 }
                 const myHeaders = new Headers();
-myHeaders.append("Authorization", "Basic " + credentials);
+                myHeaders.append("Authorization", "Basic " + credentials);
 
-const requestOptions = {
-  method: "GET",
-  headers: myHeaders,
-  redirect: "follow"
-};
+                const requestOptions = {
+                method: "GET",
+                headers: myHeaders,
+                redirect: "follow"
+                };
 
-const response = await fetch("http://localhost:8080/users/", requestOptions);
+                const response = await fetch("http://localhost:8080/users/", requestOptions);
                 const result = await response.json();
                 setUserList(result);
-                console.log(result)
-            } catch (error) {
-                console.error("Error fetching data:", error);
-            }
+            } catch (error) {}
         };
 
         fetchData();
@@ -78,7 +98,7 @@ const response = await fetch("http://localhost:8080/users/", requestOptions);
                                 <span className="admin-user-name">{item.name}</span>
                             </div>
                             <div className="admin-user-actions">
-                                <select className="admin-role-select" value={item.role} onChange={(e) => handleRoleChange(e)}>
+                                <select className="admin-role-select" value={item.role} onChange={(e) => handleRoleChange(e, item.id)}>
                                     <option value="USER">User</option>
                                     <option value="ADMIN">Admin</option>
                                 </select>

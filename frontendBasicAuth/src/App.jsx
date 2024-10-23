@@ -5,8 +5,8 @@ import { Register } from './components/pages/Register'
 import { Home } from './components/pages/Home'
 import { Client } from './components/pages/Client'
 import { Admin } from './components/pages/Admin'
-import { Login1 } from './components/pages/Logins/Login1'
-import { Registration1 } from './components/pages/Registrations/Registration1'
+import { Login } from './components/pages/Logins/Login'
+import { Registration } from './components/pages/Registrations/Registration'
 import { Navigate } from 'react-router-dom';
 
 import './App.css'
@@ -18,7 +18,7 @@ function App() {
   const ProtectedRoute = ({ role, children }) => {
     const userRole = localStorage.getItem('userRole');
     if (!role.includes(userRole)) {
-        return <Navigate to="/unauthorized" />; // Redirect if role doesn't match
+        return <Navigate to="/unauthorized" />;
     }
     return children;
   };
@@ -32,10 +32,8 @@ function App() {
             <Route path='/' element={<Home />} />
             <Route path="/admin" element={<ProtectedRoute role={['ADMIN']}><Admin /></ProtectedRoute>} />
             <Route path="/client" element={<ProtectedRoute role={['USER', 'ADMIN']} ><Client /></ProtectedRoute>} />
-            <Route path="/logins" element={<LoginSection />} />
-            <Route path='/registers' element={<Register />} />
-            <Route path='/login1' element={<Login1 />} />
-            <Route path='/register1' element={<Registration1 />} />
+            <Route path='/login' element={<Login />} />
+            <Route path='/register' element={<Registration />} />
           </Routes>
         </div>
         <Footer />

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './Login.css';
 
-export const Login1 = () => {
+export const Login = () => {
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -28,18 +28,14 @@ export const Login1 = () => {
             if (result === "Invalid credentials") {
                 setLoginProblem(result);
             } else {
-                console.log(result.role); // Use the role information
                 const base64Credentials = btoa(`${username}:${password}`);
-                localStorage.setItem('userRole', result.role); // Store role in localStorage
+                localStorage.setItem('userRole', result.role);
                 localStorage.setItem('credentials', base64Credentials)
                 localStorage.setItem('userId', result.userId)
+                window.location.replace("http://localhost:5173/");
             }
-        } catch (error) {
-            console.error(error);
-        }
+        } catch (error) {}
     }
-
-    console.log(password, username);
 
     return (
         <>

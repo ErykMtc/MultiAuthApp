@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import "./Registration.css"
 
 
-export const Registration1 = () => {
+export const Registration = () => {
 
     var [login, setLogin] = useState('');
     var [password, setPassword]  = useState('');

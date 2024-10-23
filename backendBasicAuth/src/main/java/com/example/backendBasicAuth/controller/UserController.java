@@ -29,9 +29,10 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-    @DeleteMapping("")
-    public ResponseEntity<String> deleteUser(@RequestParam String name) {
-        return userService.deleteUser(name);
+    @CrossOrigin(origins = "*")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteUser(@PathVariable Integer id) {
+        return userService.deleteUser(id);
     }
 
     @PutMapping("/{id}")
@@ -43,6 +44,7 @@ public class UserController {
         return userService.updateUser(id, name, password);
     }
 
+    @CrossOrigin(origins = "*")
     @PutMapping("/role/{id}")
     public ResponseEntity<String> updateRole(@PathVariable Integer id, @RequestParam User.Role role) {
         return userService.updateRole(id, role);
