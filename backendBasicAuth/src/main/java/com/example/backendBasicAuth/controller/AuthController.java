@@ -26,6 +26,7 @@ public class AuthController {
         }
     }
 
+    @CrossOrigin(origins = "*")
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody AuthRequest authRequest) {
         try {

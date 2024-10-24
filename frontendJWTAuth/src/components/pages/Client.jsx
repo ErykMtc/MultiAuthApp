@@ -5,7 +5,6 @@ import { RxAvatar } from "react-icons/rx";
 import useAuth from '../../hooks/useAuth';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate'
 
-// import axios from 'axios';
 
 export const Client = () => {
     const [postList, setPostList] = useState(null);
@@ -34,8 +33,6 @@ export const Client = () => {
             };
 
             fetch("http://localhost:8080/posts/add", requestOptions)
-                .then((response) => response.text())
-                .then((result) => console.log(result))
 
         } catch (error) {
             console.error("Error fetching data:", error);
@@ -51,7 +48,6 @@ export const Client = () => {
                 console.error("Error fetching data:", error);
             }
         };
-        console.log(auth?.accessToken);
         fetchData();
     }, [axiosPrivate]);
 

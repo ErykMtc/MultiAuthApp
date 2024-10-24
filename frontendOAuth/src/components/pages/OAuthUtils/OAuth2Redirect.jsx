@@ -24,7 +24,6 @@ function OAuth2Redirect() {
 
   const handleLogin = (accessToken) => {
     const data = parseJwt(accessToken);
-    console.log(data.exp, data.preferred_username, data.rol[0]);
     const role = data?.rol[0];
     const username = data?.preferred_username;
     setAuth({ username, role, accessToken });

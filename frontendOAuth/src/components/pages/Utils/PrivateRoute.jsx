@@ -11,7 +11,6 @@ export const PrivateRoute = ({ element: Component, roles, ...rest }) => {
 
     const user = JSON.parse(authCookie);
     if (roles && !roles.includes(user.role)) {
-        // Redirect if the user doesn't have the necessary role
         return <Route {...rest} element={<Navigate to="/" />} />;
     }
 

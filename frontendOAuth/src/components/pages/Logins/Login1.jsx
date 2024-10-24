@@ -28,8 +28,6 @@ export const Login1 = () => {
             const dataRole = parseJwt(accessToken);
             const role = dataRole.rol[0];
 
-            console.log(role)
-
             setAuth({ username, password, role, accessToken});
 
             setPassword("");

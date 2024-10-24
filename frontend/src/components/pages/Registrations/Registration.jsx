@@ -1,9 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import "./Registration.css";
 
-// Regex patterns
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,30}$/;
-
 
 export const Registration = () => {
     const errRef = useRef();
@@ -19,11 +17,9 @@ export const Registration = () => {
     const [errMsg, setErrMsg] = useState("");
 
     useEffect(() => {
-        // Validate password using regex
         const result = PWD_REGEX.test(password);
         setValidPwd(result);
 
-        // Validate if passwords match
         setValidMatchPwd(password === matchPwd);
     }, [password, matchPwd]);
 

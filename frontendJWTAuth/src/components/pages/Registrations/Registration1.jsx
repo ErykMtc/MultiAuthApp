@@ -30,12 +30,7 @@ export const Registration1 = () => {
             .then(result => console.log(result))
             .catch((err) => console.log(err));
         }
-        console.log(validMatchPwd);
     }
-
-    // useEffect(() => {
-    //     setValidMatchPwd(password === matchPwd);
-    // }, [password, matchPwd]);
 
     return (
         <>

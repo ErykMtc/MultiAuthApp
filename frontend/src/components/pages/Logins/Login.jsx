@@ -34,9 +34,8 @@ export const Login = () => {
         };
 
         fetch("http://localhost:8080/auth/", requestOptions)
-    .then((response) => response.json()) // Parse the response as JSON
+    .then((response) => response.json())
     .then((result) => {
-        // Now result is an object and you can access its properties
         if(result === "Invalid credentials"){
             setLoginProblem(result);
         } else {

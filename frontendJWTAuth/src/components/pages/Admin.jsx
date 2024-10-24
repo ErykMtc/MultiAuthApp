@@ -13,7 +13,6 @@ export const Admin = () => {
 
         try {
             const response = await axiosPrivate.put(`/users/role/${userId}?role=${newRole}`);
-            console.log("Role updated:", response.data);
         } catch (error) {
             console.error("Error updating role:", error);
         }
@@ -23,7 +22,6 @@ export const Admin = () => {
         try {
             await axiosPrivate.delete(`/users/${id}`);
             setUserList(prevUserList => prevUserList.filter(user => user.id !== id));
-            console.log("User deleted:", id);
         } catch (error) {
             console.error("Error deleting user:", error);
         }

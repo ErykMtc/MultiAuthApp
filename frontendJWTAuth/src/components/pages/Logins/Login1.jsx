@@ -2,7 +2,6 @@ import { useState } from 'react';
 import './Login.css';
 
 import useAuth from "../../../hooks/useAuth";
-// import axios from '../../../api/axios';
 import axios from 'axios';
 
 export const Login1 = () => {
@@ -43,8 +42,6 @@ export const Login1 = () => {
             console.error(error);
         }
     }
-
-    console.log(password, username);
 
     return (
         <>

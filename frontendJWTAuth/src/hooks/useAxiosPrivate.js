@@ -4,13 +4,12 @@ import useRefreshToken from "./useRefreshToken";
 import useAuth from "./useAuth";
 
 const useAxiosPrivate = () => {
-    const refresh = useRefreshToken();  // Funkcja do odświeżenia tokena
-    const { auth } = useAuth();  // Aktualne dane uwierzytelniające
+    const refresh = useRefreshToken();
+    const { auth } = useAuth();
 
     useEffect(() => {
         const requestInterceptor = axiosPrivate.interceptors.request.use(
             (config) => {
-                // Ustaw token w nagłówku Authorization przed każdym żądaniem
                 if (!config.headers['Authorization']) {
                     config.headers['Authorization'] = `Bearer ${auth?.accessToken}`;
                 }
@@ -24,16 +23,13 @@ const useAxiosPrivate = () => {
             async (error) => {
                 const prevRequest = error?.config;
 
-                // Sprawdzenie, czy wystąpił błąd 401 i czy zapytanie nie zostało już ponownie wysłane
                 if (error?.response?.status === 401 && !prevRequest?.sent) {
-                    prevRequest.sent = true;  // Flaga, aby uniknąć zapętlenia
-                    // Pobierz nowy accessToken
+                    prevRequest.sent = true; 
+
                     const newAccessToken = await refresh();
 
-                    // Ustaw nowy accessToken w nagłówku Authorization
                     prevRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
 
-                    // Ponów oryginalne zapytanie z nowym tokenem
                     return axiosPrivate(prevRequest);
                 }
 
@@ -41,7 +37,6 @@ const useAxiosPrivate = () => {
             }
         );
 
-        // Czystka interceptorów podczas unmountowania komponentu
         return () => {
             axiosPrivate.interceptors.request.eject(requestInterceptor);
             axiosPrivate.interceptors.response.eject(responseInterceptor);

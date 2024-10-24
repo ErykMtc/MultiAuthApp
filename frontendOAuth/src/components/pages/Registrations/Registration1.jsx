@@ -33,10 +33,6 @@ export const Registration1 = () => {
         console.log(validMatchPwd);
     }
 
-    // useEffect(() => {
-    //     setValidMatchPwd(password === matchPwd);
-    // }, [password, matchPwd]);
-
     return (
         <>
             <div className="reg-container">
