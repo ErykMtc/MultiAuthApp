@@ -13,7 +13,7 @@ export const Client = () => {
     const axiosPrivate = useAxiosPrivate();
     const { auth } = useAuth();
 
-    const handleLogin = () => {
+    const handleLogin = async () => {
         try {
             const raw = JSON.stringify({
                 "title": title,
@@ -21,7 +21,23 @@ export const Client = () => {
                 "userId": 1
             });
 
-            const response = axiosPrivate.post("/posts/add", raw);
+            const response = await axiosPrivate.post("/posts/add", raw);
+
+            if (response.status >= 200 && response.status < 300) {
+                console.log("Post added successfully");
+
+                const newPost = {
+                    title: title,
+                    content: descrition, 
+                    userName: auth?.username,
+                };
+    
+                setPostList((prevPosts) => [...prevPosts, newPost]);
+
+                setTitle("");
+                setDescription("");
+            }
+            
         } catch (error) {
             console.error("Error fetching data:", error);
         }

@@ -53,14 +53,29 @@ public class UserService {
         return userRepository.findAll();
     }
 
-//    public ResponseEntity<String> deleteUser(String name) {
-//        if (userRepository.existsByName(name)) {
-//            userRepository.deleteByName(name);
-//            return ResponseEntity.ok("User deleted successfully");
-//        } else {
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
-//        }
-//    }
+    public ResponseEntity<String> updateRole(Long id, User.Role role) {
+        Optional<User> userOptional = userRepository.findById(id);
+
+        if (userOptional.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
+
+        User user = userOptional.get();
+        user.setRole(role.toString());
+
+        userRepository.save(user);
+
+        return ResponseEntity.ok("User role updated successfully");
+    }
+
+    public ResponseEntity<String> deleteUser(Long id) {
+        if (userRepository.existsById(id)) {
+            userRepository.deleteById(id);
+            return ResponseEntity.ok("User deleted successfully");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
+    }
 
     public ResponseEntity<String> updateUser(
             @PathVariable Long id, String name, String password) {

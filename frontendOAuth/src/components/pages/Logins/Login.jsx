@@ -6,7 +6,7 @@ import { getSocialLoginUrl } from '../OAuthUtils/OAuthHelper';
 import axios from 'axios';
 import { parseJwt } from '../OAuthUtils/OAuthHelper';
 
-export const Login1 = () => {
+export const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [loginProblem, setLoginProblem] = useState('');

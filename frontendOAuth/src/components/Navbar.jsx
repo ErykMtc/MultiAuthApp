@@ -14,8 +14,8 @@ export const Navbar = () => {
                 <CustomLink to="/admin">Panel Admina</CustomLink>
             </div>
             <div className="navbar-login">
-                <CustomLink to="/registers" className="icon-link"><BsPersonBoundingBox className="login-icon" /></CustomLink>
-                <CustomLink to="/logins" className="login-button">Logowanie</CustomLink>
+                <CustomLink to="/register" className="icon-link"><BsPersonBoundingBox className="login-icon" /></CustomLink>
+                <CustomLink to="/login" className="login-button">Logowanie</CustomLink>
             </div>
         </div>
     );

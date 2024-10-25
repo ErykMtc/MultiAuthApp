@@ -1,18 +1,16 @@
 import { useState } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import { Navbar } from './components/Navbar'
-import { Register } from './components/pages/Register'
 import { Home } from './components/pages/Home'
 import { Client } from './components/pages/Client'
 import { Admin } from './components/pages/Admin'
-import { Login1 } from './components/pages/Logins/Login1'
-import { Registration1 } from './components/pages/Registrations/Registration1'
+import { Login } from './components/pages/Logins/Login'
+import { Registration } from './components/pages/Registrations/Registration'
 import OAuth2Redirect from './components/pages/OAuthUtils/OAuth2Redirect'
 import { Navigate } from 'react-router-dom';
 
 import './App.css';
 import { Footer } from './components/Footer';
-import { LoginSection } from './components/pages/LoginSection';
 import ProtectedRoutes from './hooks/ProtectedRoutes';
 
 const ROLES = {
@@ -35,10 +33,8 @@ function App() {
             <Route element={<ProtectedRoutes allowedRoles={[ROLES.Admin, ROLES.User]} />}>
               <Route path="/admin" element={<Admin />} />
             </Route>
-            <Route path="/logins" element={<LoginSection />} />
-            <Route path='/registers' element={<Register />} />
-            <Route path='/login1' element={<Login1 />} />
-            <Route path='/register1' element={<Registration1 />} />
+            <Route path='/login' element={<Login />} />
+            <Route path='/register' element={<Registration />} />
             <Route path='/oauth2/redirect' element={<OAuth2Redirect />} />
           </Routes>
         </div>
