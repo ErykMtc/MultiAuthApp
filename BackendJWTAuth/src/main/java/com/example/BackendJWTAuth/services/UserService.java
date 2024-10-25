@@ -152,9 +152,9 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public ResponseEntity<String> deleteUser(String name) {
-        if (userRepository.existsByName(name)) {
-            userRepository.deleteByName(name);
+    public ResponseEntity<String> deleteUser(Integer id) {
+        if (userRepository.existsById(id)) {
+            userRepository.deleteById(id);
             return ResponseEntity.ok("User deleted successfully");
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
@@ -191,7 +191,7 @@ public class UserService {
         User user = userOptional.get();
         user.setRole(role);
 
-        userRepository.save(user); // Save the updated user entity
+        userRepository.save(user);
 
         return ResponseEntity.ok("User role updated successfully");
     }

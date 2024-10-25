@@ -4,7 +4,7 @@ import './Login.css';
 import useAuth from "../../../hooks/useAuth";
 import axios from 'axios';
 
-export const Login1 = () => {
+export const Login = () => {
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');

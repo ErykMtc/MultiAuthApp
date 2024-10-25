@@ -24,16 +24,8 @@ public class JWTService {
     private String secretkey = "2324";
 
     public JWTService() {
-
-//        try {
-//            KeyGenerator keyGen = KeyGenerator.getInstance("HmacSHA256");
-//            SecretKey sk = keyGen.generateKey();
-//            secretkey = Base64.getEncoder().encodeToString(sk.getEncoded());
-            String rawSecretKey = "twojbardzodlugisekretnykluczodpowiedniejdlugosciohtakto";  // Dowolny ciąg znaków
+            String rawSecretKey = "twojbardzodlugisekretnykluczodpowiedniejdlugosciohtakto";
             this.secretkey = Base64.getEncoder().encodeToString(rawSecretKey.getBytes());
-//        } catch (NoSuchAlgorithmException e) {
-//            throw new RuntimeException(e);
-//        }
     }
 
     public String generateToken(UserDetails userDetails) {
@@ -43,7 +35,7 @@ public class JWTService {
                 .setClaims(claims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 60 * 60))
+                .setExpiration(new Date(System.currentTimeMillis() + 10 * 60 * 1000))
                 .signWith(getKey())
                 .compact();
 

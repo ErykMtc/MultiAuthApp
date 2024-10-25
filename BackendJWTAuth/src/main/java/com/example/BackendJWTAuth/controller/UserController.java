@@ -28,9 +28,9 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-    @DeleteMapping("")
-    public ResponseEntity<String> deleteUser(@RequestParam String name) {
-        return userService.deleteUser(name);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteUser(@PathVariable Integer id) {
+        return userService.deleteUser(id);
     }
 
     @PutMapping("/{id}")

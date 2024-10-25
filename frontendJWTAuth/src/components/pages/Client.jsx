@@ -14,7 +14,7 @@ export const Client = () => {
     const axiosPrivate = useAxiosPrivate();
     const { auth } = useAuth();
 
-    const handleLogin = () => {
+    const handleLogin = async () => {
         try {
             const myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/json");
@@ -22,17 +22,25 @@ export const Client = () => {
             const raw = JSON.stringify({
                 "title": title,
                 "content": descrition,
-                "userId": 1
+                "userId": Number(auth?.userid)
             });
 
-            const requestOptions = {
-                method: "POST",
-                headers: myHeaders,
-                body: raw,
-                redirect: "follow"
-            };
+            const response = await axiosPrivate.post("/posts/add", raw);
 
-            fetch("http://localhost:8080/posts/add", requestOptions)
+            if (response.status >= 200 && response.status < 300) {
+                console.log("Post added successfully");
+
+                const newPost = {
+                    title: title,
+                    content: descrition, 
+                    userName: auth?.username,
+                };
+    
+                setPostList((prevPosts) => [...prevPosts, newPost]);
+
+                setTitle("");
+                setDescription("");
+            }
 
         } catch (error) {
             console.error("Error fetching data:", error);
