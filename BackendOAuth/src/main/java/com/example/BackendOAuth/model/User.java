@@ -28,6 +28,9 @@ public class User {
     private String email;
     private String role;
 
+    @Column(name = "refreshToken", length = 512)
+    private String refreshToken;
+
     @Enumerated(EnumType.STRING)
     private OAuth2Provider provider;
 
@@ -111,5 +114,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getRefreshToken() {
+        return refreshToken;
+    }
+
+    public void setRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
     }
 }

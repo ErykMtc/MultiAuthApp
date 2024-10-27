@@ -21,6 +21,13 @@ public interface UserRepository extends ListCrudRepository<User, Long> {
     boolean existsById(@Param("userId") Long userId);
     @Query("SELECT u FROM User u WHERE u.username = :username")
     Optional<User> findByUsername(@Param("username") String username);
+    @Query("SELECT u FROM User u WHERE u.refreshToken = :refreshToken")
+    Optional<User> findByRefreshToken(@Param("refreshToken") String refreshToken);
+
+    @Modifying
+    @Query("UPDATE User u SET u.refreshToken = :refreshToken WHERE u.username = :username")
+    void updateRefreshToken(@Param("username") String username, @Param("refreshToken") String refreshToken);
+
     @Modifying
     @Transactional
     @Query("DELETE FROM User u WHERE u.name = :name")

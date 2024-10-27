@@ -11,7 +11,7 @@ const ProtectedRoutes = ({allowedRoles}) => {
           ? <Outlet />
           : auth?.accessToken
               ? <Navigate to="/unauthorized" state={{ from: location }} replace />
-              : <Navigate to="/logins" state={{ from: location }} replace />
+              : <Navigate to="/login" state={{ from: location }} replace />
   );
 }
 

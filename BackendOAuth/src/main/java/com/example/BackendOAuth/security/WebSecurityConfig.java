@@ -41,7 +41,7 @@ public class WebSecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/posts", "/posts/**").hasAnyAuthority(ADMIN, USER)
                         .requestMatchers(HttpMethod.POST, "/posts/add").hasAnyAuthority(ADMIN, USER)
                         .requestMatchers("/users", "/users/**").hasAnyAuthority(ADMIN)
-                        .requestMatchers("/public/**", "/auth/**", "/oauth2/**").permitAll()
+                        .requestMatchers("/public/**", "/auth/**", "/oauth2/**", "/refresh").permitAll()
                         .requestMatchers("/", "/error", "/csrf", "/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs", "/v3/api-docs/**").permitAll()
                         .anyRequest().authenticated())
                 .oauth2Login(oauth2Login -> oauth2Login

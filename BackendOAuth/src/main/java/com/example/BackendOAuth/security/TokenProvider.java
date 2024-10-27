@@ -1,5 +1,6 @@
 package com.example.BackendOAuth.security;
 
+import com.example.BackendOAuth.model.User;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
@@ -52,6 +53,66 @@ public class TokenProvider {
                 .claim("preferred_username", user.getUsername())
                 .claim("email", user.getEmail())
                 .compact();
+    }
+
+    public String generateFromRefreshToken(User user) {
+
+        byte[] signingKey = jwtSecret.getBytes();
+
+        return Jwts.builder()
+                .header().add("typ", TOKEN_TYPE)
+                .and()
+                .signWith(Keys.hmacShaKeyFor(signingKey), Jwts.SIG.HS512)
+                .expiration(Date.from(ZonedDateTime.now().plusMinutes(jwtExpirationMinutes).toInstant()))
+                .issuedAt(Date.from(ZonedDateTime.now().toInstant()))
+                .id(UUID.randomUUID().toString())
+                .issuer(TOKEN_ISSUER)
+                .audience().add(TOKEN_AUDIENCE)
+                .and()
+                .subject(user.getUsername())
+                .claim("rol", user.getRole())
+                .claim("name", user.getName())
+                .claim("preferred_username", user.getUsername())
+                .claim("email", user.getEmail())
+                .compact();
+    }
+
+    public String generateRefreshJWT(Authentication authentication) {
+        CustomUserDetails user = (CustomUserDetails) authentication.getPrincipal();
+
+        byte[] signingKey = jwtSecret.getBytes();
+
+        return Jwts.builder()
+                .header().add("typ", TOKEN_TYPE)
+                .and()
+                .signWith(Keys.hmacShaKeyFor(signingKey), Jwts.SIG.HS512)
+                .expiration(Date.from(ZonedDateTime.now().plusMinutes(jwtExpirationMinutes).toInstant()))
+                .issuedAt(Date.from(ZonedDateTime.now().toInstant()))
+                .id(UUID.randomUUID().toString())
+                .issuer(TOKEN_ISSUER)
+                .audience().add(TOKEN_AUDIENCE)
+                .and()
+                .subject(user.getUsername())
+                .claim("name", user.getName())
+                .compact();
+    }
+
+    public boolean validateRefreshToken(String token) {
+        try {
+            byte[] signingKey = jwtSecret.getBytes();
+
+            Jws<Claims> jws = Jwts.parser()
+                    .verifyWith(Keys.hmacShaKeyFor(signingKey))
+                    .build()
+                    .parseSignedClaims(token);
+
+            Date expiration = jws.getBody().getExpiration();
+            return expiration != null && expiration.after(new Date());
+
+        } catch (JwtException | IllegalArgumentException e) {
+            log.error("Invalid refresh token: {}", e.getMessage());
+            return false;
+        }
     }
 
     public Optional<Jws<Claims>> validateTokenAndGetJws(String token) {
