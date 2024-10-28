@@ -8,6 +8,7 @@ import { Login } from './components/pages/Logins/Login'
 import { Registration } from './components/pages/Registrations/Registration'
 import OAuth2Redirect from './components/pages/OAuthUtils/OAuth2Redirect'
 import { Navigate } from 'react-router-dom';
+import PersistLogin from './components/PersitLogin'
 
 import './App.css';
 import { Footer } from './components/Footer';
@@ -26,12 +27,14 @@ function App() {
         <Navbar/>
         <div className="">
           <Routes>
+            <Route element={<PersistLogin/>}>
             <Route path='/' element={<Home />} />
             <Route element={<ProtectedRoutes allowedRoles={[ROLES.Admin, ROLES.User]} />}>
               <Route path="/client" element={<Client />} />
             </Route>
             <Route element={<ProtectedRoutes allowedRoles={[ROLES.Admin, ROLES.User]} />}>
               <Route path="/admin" element={<Admin />} />
+            </Route>
             </Route>
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Registration />} />

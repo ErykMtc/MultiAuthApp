@@ -27,6 +27,9 @@ public class TokenProvider {
     @Value("${app.jwt.expiration.minutes}")
     private Long jwtExpirationMinutes;
 
+    @Value("${app.jwtRefresh.expiration.minutes}")
+    private Long jwtRefreshExpirationMinutes;
+
     public String generate(Authentication authentication) {
         CustomUserDetails user = (CustomUserDetails) authentication.getPrincipal();
 
@@ -86,7 +89,7 @@ public class TokenProvider {
                 .header().add("typ", TOKEN_TYPE)
                 .and()
                 .signWith(Keys.hmacShaKeyFor(signingKey), Jwts.SIG.HS512)
-                .expiration(Date.from(ZonedDateTime.now().plusMinutes(jwtExpirationMinutes).toInstant()))
+                .expiration(Date.from(ZonedDateTime.now().plusMinutes(jwtRefreshExpirationMinutes).toInstant()))
                 .issuedAt(Date.from(ZonedDateTime.now().toInstant()))
                 .id(UUID.randomUUID().toString())
                 .issuer(TOKEN_ISSUER)

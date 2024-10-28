@@ -6,7 +6,7 @@ export const PrivateRoute = ({ element: Component, roles, ...rest }) => {
     const authCookie = Cookies.get('AuthApp');
 
     if (!authCookie) {
-        return <Route {...rest} element={<Navigate to="/login1" />} />;
+        return <Route {...rest} element={<Navigate to="/login" />} />;
     }
 
     const user = JSON.parse(authCookie);

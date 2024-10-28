@@ -57,7 +57,7 @@ public class AuthController {
         userService.registerNewUser(mapSignUpRequestToUser(signUpRequest));
 
         String token = authenticateAndGetToken(signUpRequest.getUsername(), signUpRequest.getPassword(), response);
-        return ResponseEntity.ok("User registered successfully");
+        return ResponseEntity.ok(token);
     }
 
     @GetMapping("/refresh")

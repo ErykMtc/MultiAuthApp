@@ -20,7 +20,8 @@ export const Login = () => {
                   "pwd": password
                 }), 
                 {
-                  headers: { 'Content-Type': 'application/json' }
+                  headers: { 'Content-Type': 'application/json' },
+                  withCredentials: true
                 }
             );
 
@@ -28,7 +29,7 @@ export const Login = () => {
             const dataRole = parseJwt(accessToken);
             const role = dataRole.rol[0];
 
-            setAuth({ username, password, role, accessToken});
+            setAuth({ username, role, accessToken});
 
             setPassword("");
             setUsername("");

@@ -1,6 +1,8 @@
 package com.example.BackendOAuth.security.oauth2;
 
 import com.example.BackendOAuth.security.TokenProvider;
+import com.example.BackendOAuth.services.UserService;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +19,7 @@ import java.io.IOException;
 public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
     private final TokenProvider tokenProvider;
+    private final UserService userService;
 
     @Value("${app.oauth2.redirectUri}")
     private String redirectUri;
@@ -33,6 +36,17 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
                 determineTargetUrl(request, response, authentication) : redirectUri;
 
         String token = tokenProvider.generate(authentication);
+        String refreshToken = tokenProvider.generateRefreshJWT(authentication);
+        userService.updateUserRefreshToken(authentication.getName(), refreshToken);
+
+        Cookie refreshTokenCookie = new Cookie("refreshToken", refreshToken);
+        refreshTokenCookie.setHttpOnly(true);
+        refreshTokenCookie.setSecure(false);
+        refreshTokenCookie.setPath("/");
+        refreshTokenCookie.setMaxAge(60 * 60 * 24 * 7); // 1 week expiry
+
+        response.addCookie(refreshTokenCookie);
+        
         targetUrl = UriComponentsBuilder.fromUriString(targetUrl).queryParam("token", token).build().toUriString();
         getRedirectStrategy().sendRedirect(request, response, targetUrl);
     }
