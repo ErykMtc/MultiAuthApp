@@ -63,24 +63,21 @@
     font-size: 14px;
 }
 
-/* Ukrywa elementy poza ekranem */
 .offscreen {
     position: absolute;
     left: -9999px;
 }
 
-/* Styl dla instrukcji walidacyjnych */
 .instructions {
     font-size: 0.875rem;
-    color: #d8000c; /* Czerwony kolor dla błędów */
-    background-color: #ffd2d2; /* Jasny czerwony dla tła */
+    color: #d8000c; 
+    background-color: #ffd2d2;
     border: 1px solid #d8000c;
     padding: 0.5rem;
     margin-top: 0.5rem;
     border-radius: 5px;
 }
 
-/* Dodatkowo możesz dodać style, aby poprawić wygląd pól input podczas błędnej walidacji */
 input[aria-invalid="true"] {
-    border: 2px solid #d8000c; /* Czerwony kolor ramki dla błędnych pól */
+    border: 2px solid #d8000c;
 }

@@ -71,10 +71,6 @@ public class User {
         this.refreshToken = refreshToken;
     }
 
-    //    public String getRoleString() {
-//        return role.toString();
-//    }
-
     public void setRole(Role role) {
         this.role = role;
     }

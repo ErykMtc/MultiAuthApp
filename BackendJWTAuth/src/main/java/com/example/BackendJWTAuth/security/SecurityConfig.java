@@ -51,11 +51,11 @@ public class SecurityConfig {
     public CorsFilter corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration corsConfig = new CorsConfiguration();
-        corsConfig.setAllowedOrigins(Arrays.asList("http://localhost:5173"));  // Zezwól na frontend
+        corsConfig.setAllowedOrigins(Arrays.asList("http://localhost:5173"));
         corsConfig.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         corsConfig.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
-        corsConfig.setAllowCredentials(true);  // Pozwala na ciasteczka (opcjonalnie)
-        source.registerCorsConfiguration("/**", corsConfig);  // Dla wszystkich ścieżek
+        corsConfig.setAllowCredentials(true);
+        source.registerCorsConfiguration("/**", corsConfig);
         return new CorsFilter(source);
     }
 

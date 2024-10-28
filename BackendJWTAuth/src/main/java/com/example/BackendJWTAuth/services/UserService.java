@@ -43,7 +43,6 @@ public class UserService {
         if (userRepository.existsByName(username)) {
             throw new IllegalArgumentException("Username already exists");
         }
-//        User user = new User(username, passwordEncoder.encode(password), role);
 
         User user = new User(username, password, role);
         return userRepository.save(user);
@@ -53,8 +52,6 @@ public class UserService {
         if (userRepository.existsByName(username)) {
             User user = userRepository.foundUser(username)
                     .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-
-//            throw new IllegalArgumentException("Unsuccessfully login" + user.getPassword() + "   " + password);
 
             if(Objects.equals(user.getPassword(), password)){
                 AuthResponse res = new AuthResponse();
@@ -83,12 +80,11 @@ public class UserService {
 
                 userRepository.updateRefreshToken(jwtUser.getId(), jwtUser.getRefreshToken());
 
-                // Add the refresh token as an HTTP-only cookie
                 Cookie refreshTokenCookie = new Cookie("refreshToken", jwtUser.getRefreshToken());
-                refreshTokenCookie.setHttpOnly(true);  // Prevents JavaScript access to the cookie
-                refreshTokenCookie.setSecure(true);    // Only send over HTTPS
-                refreshTokenCookie.setPath("/");       // Cookie will be sent to all paths in the domain
-                refreshTokenCookie.setMaxAge(60 * 60 * 24 * 7); // 1 week expiry
+                refreshTokenCookie.setHttpOnly(true);
+                refreshTokenCookie.setSecure(true);
+                refreshTokenCookie.setPath("/");
+                refreshTokenCookie.setMaxAge(60 * 60 * 24 * 7);
 
                 response.addCookie(refreshTokenCookie);
 

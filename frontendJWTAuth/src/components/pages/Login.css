@@ -5,7 +5,6 @@
 }
 
 .auth-box{
-    /* border: 1px solid black; */
     border-radius: 10px;
     width: 350px;
     display: flex;
@@ -16,19 +15,9 @@
     -webkit-box-shadow: 0px 0px 40px -6px rgba(19, 29, 120, 1);
     -moz-box-shadow: 0px 0px 40px -6px rgba(19, 29, 120, 1);
     box-shadow: 0px 0px 40px -6px rgba(19, 29, 120, 1);
-    /* background-image: linear-gradient(to right top, #ea1616, #fa003f, #ff0065, #ff008b, #fa00b2, #eb00c3, #d714d5, #bd28e7, #a322e8, #8520e9, #5f20ea, #1623ea); */
 }
 
 .auth-icon{
-    /* font-size: 4rem; */
-    /* width: 120px;
-    height: 120px;
-    font-weight: bolder; */
-    /* border-radius: 50%; */
-    /* background-color: bisque;
-    display: flex;
-    align-items: center;
-    justify-content: center; */
     background-image: url("../../assets/img2.jpg");
     background-size: cover;
     height: 180px;

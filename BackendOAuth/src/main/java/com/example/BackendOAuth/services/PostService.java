@@ -36,24 +36,21 @@ public class PostService {
         if(bindingResult.hasErrors()){
             return "Invalid post data: " + bindingResult.getAllErrors();
         } else {
-            Long userId = post.getUserId(); // Pobierz userId z pola userId w obiekcie Post
+            Long userId = post.getUserId();
 
             if (userId == null) {
                 return "User ID cannot be null";
             }
 
-            // Sprawdź czy użytkownik istnieje
             boolean userExists = userRepository.existsById(userId);
             if (!userExists) {
                 return "User does not exist";
             }
 
-            // Utwórz obiekt użytkownika na podstawie userId
             User user = new User();
             user.setId(userId);
             post.setUser(user);
 
-            // Zapisz post
             postRepository.save(post);
             return "Post added successfully";
         }

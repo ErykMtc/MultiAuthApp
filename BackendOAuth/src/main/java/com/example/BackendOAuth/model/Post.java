@@ -21,7 +21,6 @@ public class Post {
     private User user;
 
     @Transient
-//    @JsonIgnore
     private Long userId;
 
     public Long getUserId() {

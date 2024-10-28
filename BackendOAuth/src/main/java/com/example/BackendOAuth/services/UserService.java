@@ -112,7 +112,7 @@ public class UserService {
         User user = userOptional.get();
         user.setRole(role);
 
-        userRepository.save(user); // Save the updated user entity
+        userRepository.save(user);
 
         return ResponseEntity.ok("User role updated successfully");
     }
@@ -124,12 +124,11 @@ public class UserService {
             String token = tokenProvider.generate(authentication);
             updateUserRefreshToken(username, refreshToken);
 
-            // Add the refresh token as an HTTP-only cookie
             Cookie refreshTokenCookie = new Cookie("refreshToken", refreshToken);
             refreshTokenCookie.setHttpOnly(true);
             refreshTokenCookie.setSecure(false);
             refreshTokenCookie.setPath("/");
-            refreshTokenCookie.setMaxAge(60 * 60 * 24 * 7); // 1 week expiry
+            refreshTokenCookie.setMaxAge(60 * 60 * 24 * 7); 
 
             response.addCookie(refreshTokenCookie);
 

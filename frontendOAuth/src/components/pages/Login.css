@@ -20,15 +20,6 @@
 }
 
 .auth-icon{
-    /* font-size: 4rem; */
-    /* width: 120px;
-    height: 120px;
-    font-weight: bolder; */
-    /* border-radius: 50%; */
-    /* background-color: bisque;
-    display: flex;
-    align-items: center;
-    justify-content: center; */
     background-image: url("../../assets/img2.jpg");
     background-size: cover;
     height: 180px;

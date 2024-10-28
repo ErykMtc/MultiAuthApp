@@ -43,7 +43,7 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         refreshTokenCookie.setHttpOnly(true);
         refreshTokenCookie.setSecure(false);
         refreshTokenCookie.setPath("/");
-        refreshTokenCookie.setMaxAge(60 * 60 * 24 * 7); // 1 week expiry
+        refreshTokenCookie.setMaxAge(60 * 60 * 24 * 7);
 
         response.addCookie(refreshTokenCookie);
         
